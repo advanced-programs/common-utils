@@ -1,4 +1,4 @@
-package zx.soft.sent.utils.threads;
+package zx.soft.utils.threads;
 
 import static org.junit.Assert.assertEquals;
 

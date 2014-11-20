@@ -1,4 +1,4 @@
-package zx.soft.sent.utils.checksum;
+package zx.soft.utils.checksum;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
