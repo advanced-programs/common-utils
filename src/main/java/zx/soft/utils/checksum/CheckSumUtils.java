@@ -1,4 +1,4 @@
-package zx.soft.sent.utils.checksum;
+package zx.soft.utils.checksum;
 
 import java.security.MessageDigest;
 import java.util.zip.CRC32;

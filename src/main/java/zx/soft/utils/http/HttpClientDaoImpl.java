@@ -1,4 +1,4 @@
-package zx.soft.sent.utils.http;
+package zx.soft.utils.http;
 
 import java.io.BufferedReader;
 import java.io.IOException;

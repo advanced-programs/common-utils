@@ -1,4 +1,4 @@
-package zx.soft.sent.utils.json;
+package zx.soft.utils.json;
 
 import java.io.IOException;
 import java.text.DateFormat;

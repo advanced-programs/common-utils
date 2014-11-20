@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import org.junit.Before;
 import org.junit.Test;
 
+import zx.soft.utils.retry.RetryHandler;
+
 public class RetryHandlerTest {
 
 	class Bar implements Foo {

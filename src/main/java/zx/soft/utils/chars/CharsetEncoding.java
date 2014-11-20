@@ -1,4 +1,4 @@
-package zx.soft.sent.utils.chars;
+package zx.soft.utils.chars;
 
 import java.io.UnsupportedEncodingException;
 

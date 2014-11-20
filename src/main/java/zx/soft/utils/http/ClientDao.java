@@ -1,4 +1,4 @@
-package zx.soft.sent.utils.http;
+package zx.soft.utils.http;
 
 /**
  * HTTP客户端接口

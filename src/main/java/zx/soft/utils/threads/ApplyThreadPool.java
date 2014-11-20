@@ -1,4 +1,4 @@
-package zx.soft.sent.utils.threads;
+package zx.soft.utils.threads;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.concurrent.ArrayBlockingQueue;

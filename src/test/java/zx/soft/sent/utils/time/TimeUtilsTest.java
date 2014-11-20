@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import zx.soft.utils.time.TimeUtils;
+
 public class TimeUtilsTest {
 
 	@Test

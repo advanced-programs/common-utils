@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import zx.soft.utils.sort.InsertSort;
+
 public class InsertSortTest {
 
 	private static final String[] IN_STRS_ARR = { "111=5", "222=1", "333=9", "444=2", "555=6" };

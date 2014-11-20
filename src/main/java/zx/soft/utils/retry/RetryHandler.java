@@ -1,4 +1,4 @@
-package zx.soft.sent.utils.retry;
+package zx.soft.utils.retry;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;

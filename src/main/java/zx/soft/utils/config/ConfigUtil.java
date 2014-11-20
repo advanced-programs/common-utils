@@ -1,4 +1,4 @@
-package zx.soft.sent.utils.config;
+package zx.soft.utils.config;
 
 import java.io.InputStream;
 import java.util.Properties;

@@ -1,4 +1,4 @@
-package zx.soft.sent.utils.time;
+package zx.soft.utils.time;
 
 import java.text.DateFormat;
 import java.text.ParseException;

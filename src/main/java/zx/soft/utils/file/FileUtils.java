@@ -1,4 +1,4 @@
-package zx.soft.sent.utils.file;
+package zx.soft.utils.file;
 
 import java.io.File;
 import java.io.IOException;
