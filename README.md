@@ -16,7 +16,7 @@
             <groupId>zx.soft</groupId>
             <artifactId>common-utils</artifactId>
             <version>1.0.0</version>
-		 </dependency>
+        </dependency>
 
         ...
 
