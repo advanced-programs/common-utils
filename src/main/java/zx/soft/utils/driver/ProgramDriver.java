@@ -5,6 +5,9 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * 进程驱动器，用于管理运行不同进程的
  * 
@@ -12,6 +15,8 @@ import java.util.TreeMap;
  *
  */
 public class ProgramDriver {
+
+	private static Logger logger = LoggerFactory.getLogger(ProgramDriver.class);
 
 	/**
 	 * 进程描述器：基于进程的类和可读性描述
@@ -35,14 +40,14 @@ public class ProgramDriver {
 	public void driver(String[] args) throws Throwable {
 		// 判断驱动参数是否为空
 		if (args.length == 0) {
-			System.out.println("An main program must be given as the first argument.");
+			logger.error("An main program must be given as the first argument.");
 			printUsage(programs);
 			System.exit(-1);
 		}
 		// 第一个参数存在，但是库中没有
 		ProgramDescription pgm = programs.get(args[0]);
 		if (pgm == null) {
-			System.out.println("Unknown program '" + args[0] + "' chosen.");
+			logger.error("Unknown program '" + args[0] + "' chosen.");
 			printUsage(programs);
 			System.exit(-1);
 		}
@@ -57,9 +62,9 @@ public class ProgramDriver {
 	 * 打印说明
 	 */
 	private static void printUsage(Map<String, ProgramDescription> programs) {
-		System.out.println("Valid program names are:");
+		logger.error("Valid program names are:");
 		for (Map.Entry<String, ProgramDescription> item : programs.entrySet()) {
-			System.out.println("  " + item.getKey() + ": " + item.getValue().getDescription());
+			logger.error("  " + item.getKey() + ": " + item.getValue().getDescription());
 		}
 	}
 
