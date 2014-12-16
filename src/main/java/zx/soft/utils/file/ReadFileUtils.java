@@ -28,10 +28,10 @@ public class ReadFileUtils {
 			}
 			return result;
 		} catch (FileNotFoundException e) {
-			logger.error("FileNotFoundException: " + e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		} catch (IOException e) {
-			logger.error("IOException: " + e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -49,10 +49,10 @@ public class ReadFileUtils {
 			}
 			return result;
 		} catch (FileNotFoundException e) {
-			logger.error("FileNotFoundException: " + e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		} catch (IOException e) {
-			logger.error("IOException: " + e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}

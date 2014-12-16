@@ -45,7 +45,7 @@ public class HttpUtils {
 		try {
 			response = httpClient.execute(httpGet);
 		} catch (IOException e) {
-			logger.error("IOException in HttpUtils: ", e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 		}
 		// 查看返回内容，类似于在浏览器中查看网页源码
 		HttpEntity entity = response.getEntity();
@@ -57,13 +57,13 @@ public class HttpUtils {
 				// 网页的Meta标签中指定了编码
 				EntityUtils.consume(entity); // 关闭内容流
 			} catch (ParseException | IOException e) {
-				logger.error("ParseException or IOException e=" + e.getMessage());
+				logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			}
 		}
 		try {
 			httpClient.close();
 		} catch (IOException e) {
-			logger.error("IOException" + e.getMessage());
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 		}
 
 		return result;
@@ -103,9 +103,9 @@ public class HttpUtils {
 				reader.close();
 			}
 		} catch (URIException e) {
-			logger.error("执行HTTP Get请求时，编码查询字符串“" + queryString + "”发生异常！", e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 		} catch (IOException e) {
-			logger.error("执行HTTP Get请求" + url + "时，发生异常！", e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 		} finally {
 			method.releaseConnection();
 			//			client.getHttpConnectionManager().closeIdleConnections(1000);

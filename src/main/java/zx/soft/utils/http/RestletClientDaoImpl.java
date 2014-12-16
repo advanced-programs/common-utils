@@ -47,7 +47,7 @@ public class RestletClientDaoImpl implements ClientDao {
 			String result = clientResource.get().getText();
 			return result;
 		} catch (ResourceException | IOException e) {
-			logger.error("RestletClientDaoImpl doGet ResourceException or IOException:{}", e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -62,7 +62,7 @@ public class RestletClientDaoImpl implements ClientDao {
 			String result = response.getText();
 			return result;
 		} catch (IOException e) {
-			logger.error("RestletClientDaoImpl doPost IOException:{}", e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		} finally {
 			response.release();
@@ -78,7 +78,7 @@ public class RestletClientDaoImpl implements ClientDao {
 			String result = clientResource.get().getText();
 			return result;
 		} catch (ResourceException | IOException e) {
-			logger.error("RestletClientDaoImpl doGet ResourceException or IOException:{}", e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -88,7 +88,7 @@ public class RestletClientDaoImpl implements ClientDao {
 		try {
 			client.stop();
 		} catch (Exception e) {
-			logger.error("RestletClientDaoImpl close Exception:{}", e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 		}
 	}
 

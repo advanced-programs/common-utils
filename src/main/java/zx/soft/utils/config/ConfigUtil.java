@@ -23,6 +23,7 @@ public class ConfigUtil {
 			result.load(in);
 			return result;
 		} catch (Exception e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}

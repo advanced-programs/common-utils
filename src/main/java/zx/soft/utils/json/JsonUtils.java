@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JSON工具类
@@ -16,6 +18,8 @@ import org.codehaus.jackson.map.ObjectMapper;
  *
  */
 public class JsonUtils {
+
+	private static Logger logger = LoggerFactory.getLogger(JsonUtils.class);
 
 	private static final ObjectMapper mapper = new ObjectMapper();
 
@@ -34,6 +38,7 @@ public class JsonUtils {
 		try {
 			return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
 		} catch (IOException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -42,6 +47,7 @@ public class JsonUtils {
 		try {
 			return mapper.writeValueAsString(object);
 		} catch (IOException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
