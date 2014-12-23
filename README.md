@@ -33,6 +33,10 @@
 </project>
 ```
 
+### 注意事项
+
+> ProgramDriver目前针对RESTlet启动的接口服务不支持，会导致接口启动不成功。
+
 ### 开发人员
 
 WeChat: wgybzb

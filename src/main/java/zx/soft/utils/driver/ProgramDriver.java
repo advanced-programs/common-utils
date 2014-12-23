@@ -37,7 +37,16 @@ public class ProgramDriver {
 	/**
 	 * 主进程驱动
 	 */
-	public void driver(String[] args) throws Throwable {
+	public void driver(String[] argv) throws Throwable {
+		if (run(argv) == -1) {
+			System.exit(-1);
+		}
+	}
+
+	/**
+	 * 主运行方法
+	 */
+	public int run(String[] args) throws Throwable {
 		// 判断驱动参数是否为空
 		if (args.length == 0) {
 			logger.error("An main program must be given as the first argument.");
@@ -56,6 +65,7 @@ public class ProgramDriver {
 		System.arraycopy(args, 1, newArgs, 0, newArgs.length);
 		// 唤起进程
 		pgm.invoke(newArgs);
+		return 0;
 	}
 
 	/**
