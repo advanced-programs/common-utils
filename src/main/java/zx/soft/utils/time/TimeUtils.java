@@ -6,6 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import zx.soft.utils.log.LogbackUtil;
+
 /**
  * 时间工具类
  * 
@@ -13,6 +18,8 @@ import java.util.Locale;
  *
  */
 public class TimeUtils {
+
+	private static Logger logger = LoggerFactory.getLogger(TimeUtils.class);
 
 	//	private static DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);
 
@@ -59,6 +66,7 @@ public class TimeUtils {
 		try {
 			return LONG_FORMAT.format(dateFormat.parse(str));
 		} catch (ParseException e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			return "";
 			//			throw new RuntimeException();
 		}
@@ -71,6 +79,7 @@ public class TimeUtils {
 		try {
 			return LONG_FORMAT.format(dateFormat.parse(str).getTime() - 8 * 3600 * 1000);
 		} catch (ParseException e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			return "";
 			//			throw new RuntimeException();
 		}
@@ -100,6 +109,7 @@ public class TimeUtils {
 			Date date = LONG_FORMAT.parse("2014-08-25 12:31:45");
 			return date.getTime();
 		} catch (ParseException e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}

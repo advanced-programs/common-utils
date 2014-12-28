@@ -13,6 +13,8 @@ import org.restlet.resource.ResourceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.utils.log.LogbackUtil;
+
 /**
  * RESTlet客户端
  * 
@@ -47,7 +49,7 @@ public class RestletClientDaoImpl implements ClientDao {
 			String result = clientResource.get().getText();
 			return result;
 		} catch (ResourceException | IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -62,7 +64,7 @@ public class RestletClientDaoImpl implements ClientDao {
 			String result = response.getText();
 			return result;
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		} finally {
 			response.release();
@@ -78,7 +80,7 @@ public class RestletClientDaoImpl implements ClientDao {
 			String result = clientResource.get().getText();
 			return result;
 		} catch (ResourceException | IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -88,7 +90,8 @@ public class RestletClientDaoImpl implements ClientDao {
 		try {
 			client.stop();
 		} catch (Exception e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			throw new RuntimeException();
 		}
 	}
 

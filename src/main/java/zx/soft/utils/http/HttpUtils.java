@@ -22,6 +22,8 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.utils.log.LogbackUtil;
+
 /**
  * HTTP工具类
  * 
@@ -45,7 +47,7 @@ public class HttpUtils {
 		try {
 			response = httpClient.execute(httpGet);
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		}
 		// 查看返回内容，类似于在浏览器中查看网页源码
 		HttpEntity entity = response.getEntity();
@@ -57,13 +59,13 @@ public class HttpUtils {
 				// 网页的Meta标签中指定了编码
 				EntityUtils.consume(entity); // 关闭内容流
 			} catch (ParseException | IOException e) {
-				logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			}
 		}
 		try {
 			httpClient.close();
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		}
 
 		return result;
@@ -103,9 +105,9 @@ public class HttpUtils {
 				reader.close();
 			}
 		} catch (URIException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		} finally {
 			method.releaseConnection();
 			//			client.getHttpConnectionManager().closeIdleConnections(1000);

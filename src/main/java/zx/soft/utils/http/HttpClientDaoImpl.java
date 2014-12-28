@@ -36,6 +36,8 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.utils.log.LogbackUtil;
+
 /**
  * HTTP工具类
  * 
@@ -69,7 +71,7 @@ public class HttpClientDaoImpl implements ClientDao {
 		try {
 			response = httpClient.execute(httpGet);
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		}
 		// 查看返回内容，类似于在浏览器中查看网页源码
 		HttpEntity entity = response.getEntity();
@@ -81,13 +83,13 @@ public class HttpClientDaoImpl implements ClientDao {
 				// 网页的Meta标签中指定了编码
 				EntityUtils.consume(entity); // 关闭内容流
 			} catch (ParseException | IOException e) {
-				logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			}
 		}
 		try {
 			httpClient.close();
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		}
 
 		return result;
@@ -130,9 +132,9 @@ public class HttpClientDaoImpl implements ClientDao {
 				reader.close();
 			}
 		} catch (URIException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		} finally {
 			method.releaseConnection();
 			//			client.getHttpConnectionManager().closeIdleConnections(1000);
@@ -155,7 +157,7 @@ public class HttpClientDaoImpl implements ClientDao {
 		try {
 			requestEntity = new StringRequestEntity(data, null, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			return;
 		}
 		httpMethod.setRequestEntity(requestEntity);
@@ -177,7 +179,7 @@ public class HttpClientDaoImpl implements ClientDao {
 		try {
 			client.executeMethod(httpMethod);
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			return;
 		}
 		int responseCode = httpMethod.getStatusCode();
@@ -212,14 +214,14 @@ public class HttpClientDaoImpl implements ClientDao {
 			EntityUtils.consume(entity2);
 			return result + "";
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		} finally {
 			try {
 				response.close();
 				httpClient.close();
 			} catch (IOException e) {
-				logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 				throw new RuntimeException(e);
 			}
 		}
