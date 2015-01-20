@@ -14,9 +14,10 @@ public class InsertSort {
 	public static String[] toptable(String[] table, String str) {
 
 		String[] result = new String[table.length]; //从大到小排序
-		int key = Integer.parseInt(str.substring(str.indexOf("=") + 1));
-		int lastvalue = Integer.parseInt(table[table.length - 1].substring(table[table.length - 1].indexOf("=") + 1));
-		int firstvalue = Integer.parseInt(table[0].substring(table[0].indexOf("=") + 1));
+		int key = Integer.parseInt(str.substring(str.lastIndexOf("=") + 1));
+		int lastvalue = Integer
+				.parseInt(table[table.length - 1].substring(table[table.length - 1].lastIndexOf("=") + 1));
+		int firstvalue = Integer.parseInt(table[0].substring(table[0].lastIndexOf("=") + 1));
 		int index = 0;
 		if (key >= firstvalue) {
 			result[0] = str;
@@ -53,7 +54,7 @@ public class InsertSort {
 		int media = 0;
 		while (low <= high) {
 			media = (low + high) / 2;
-			int value = Integer.parseInt(table[media].substring(table[media].indexOf("=") + 1));
+			int value = Integer.parseInt(table[media].substring(table[media].lastIndexOf("=") + 1));
 			if (key > value) {
 				high = media;
 				index = high;
