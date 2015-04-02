@@ -4,7 +4,7 @@ import java.io.UnsupportedEncodingException;
 
 /**
  * 转换各种字符串的编码
- * 
+ *
  * @author wanggang
  *
  */
@@ -34,50 +34,50 @@ public class CharsetEncoding {
 	/**
 	 * 将字符编码转换成US-ASCII码
 	 */
-	public String toASCII(String str) {
-		return this.changeCharset(str, US_ASCII);
+	public static String toASCII(String str) {
+		return changeCharset(str, US_ASCII);
 	}
 
 	/**
 	 * 将字符编码转换成ISO-8859-1码
 	 */
-	public String toISO_8859_1(String str) {
-		return this.changeCharset(str, ISO_8859_1);
+	public static String toISO_8859_1(String str) {
+		return changeCharset(str, ISO_8859_1);
 	}
 
 	/**
 	 * 将字符编码转换成UTF-8码
 	 */
-	public String toUTF_8(String str) {
-		return this.changeCharset(str, UTF_8);
+	public static String toUTF_8(String str) {
+		return changeCharset(str, UTF_8);
 	}
 
 	/**
 	 * 将字符编码转换成UTF-16BE码
 	 */
-	public String toUTF_16BE(String str) {
-		return this.changeCharset(str, UTF_16BE);
+	public static String toUTF_16BE(String str) {
+		return changeCharset(str, UTF_16BE);
 	}
 
 	/**
 	 * 将字符编码转换成UTF-16LE码
 	 */
-	public String toUTF_16LE(String str) {
-		return this.changeCharset(str, UTF_16LE);
+	public static String toUTF_16LE(String str) {
+		return changeCharset(str, UTF_16LE);
 	}
 
 	/**
 	 * 将字符编码转换成UTF-16码
 	 */
-	public String toUTF_16(String str) {
-		return this.changeCharset(str, UTF_16);
+	public static String toUTF_16(String str) {
+		return changeCharset(str, UTF_16);
 	}
 
 	/**
 	 * 将字符编码转换成GBK码
 	 */
-	public String toGBK(String str) {
-		return this.changeCharset(str, GBK);
+	public static String toGBK(String str) {
+		return changeCharset(str, GBK);
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class CharsetEncoding {
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
-	public String changeCharset(String str, String newCharset) {
+	public static String changeCharset(String str, String newCharset) {
 		try {
 			if (str != null) {
 				//用默认字符编码解码字符串。
@@ -111,7 +111,7 @@ public class CharsetEncoding {
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
-	public String changeCharset(String str, String oldCharset, String newCharset) {
+	public static String changeCharset(String str, String oldCharset, String newCharset) {
 		try {
 			if (str != null) {
 				//用旧的字符编码解码字符串。解码可能会出现异常。
@@ -132,40 +132,39 @@ public class CharsetEncoding {
 	 */
 	public static void main(String[] args) {
 
-		CharsetEncoding test = new CharsetEncoding();
 		String str = "This is a 中文的 String!";
 		System.out.println("str: " + str);
-		String gbk = test.toGBK(str);
+		String gbk = CharsetEncoding.toGBK(str);
 		System.out.println("转换成GBK码: " + gbk);
 		System.out.println();
-		String ascii = test.toASCII(str);
+		String ascii = CharsetEncoding.toASCII(str);
 		System.out.println("转换成US-ASCII码: " + ascii);
-		gbk = test.changeCharset(ascii, CharsetEncoding.US_ASCII, CharsetEncoding.GBK);
+		gbk = CharsetEncoding.changeCharset(ascii, CharsetEncoding.US_ASCII, CharsetEncoding.GBK);
 		System.out.println("再把ASCII码的字符串转换成GBK码: " + gbk);
 		System.out.println();
-		String iso88591 = test.toISO_8859_1(str);
+		String iso88591 = CharsetEncoding.toISO_8859_1(str);
 		System.out.println("转换成ISO-8859-1码: " + iso88591);
-		gbk = test.changeCharset(iso88591, CharsetEncoding.ISO_8859_1, CharsetEncoding.GBK);
+		gbk = CharsetEncoding.changeCharset(iso88591, CharsetEncoding.ISO_8859_1, CharsetEncoding.GBK);
 		System.out.println("再把ISO-8859-1码的字符串转换成GBK码: " + gbk);
 		System.out.println();
-		String utf8 = test.toUTF_8(str);
+		String utf8 = CharsetEncoding.toUTF_8(str);
 		System.out.println("转换成UTF-8码: " + utf8);
-		gbk = test.changeCharset(utf8, CharsetEncoding.UTF_8, CharsetEncoding.GBK);
+		gbk = CharsetEncoding.changeCharset(utf8, CharsetEncoding.UTF_8, CharsetEncoding.GBK);
 		System.out.println("再把UTF-8码的字符串转换成GBK码: " + gbk);
 		System.out.println();
-		String utf16be = test.toUTF_16BE(str);
+		String utf16be = CharsetEncoding.toUTF_16BE(str);
 		System.out.println("转换成UTF-16BE码:" + utf16be);
-		gbk = test.changeCharset(utf16be, CharsetEncoding.UTF_16BE, CharsetEncoding.GBK);
+		gbk = CharsetEncoding.changeCharset(utf16be, CharsetEncoding.UTF_16BE, CharsetEncoding.GBK);
 		System.out.println("再把UTF-16BE码的字符串转换成GBK码: " + gbk);
 		System.out.println();
-		String utf16le = test.toUTF_16LE(str);
+		String utf16le = CharsetEncoding.toUTF_16LE(str);
 		System.out.println("转换成UTF-16LE码:" + utf16le);
-		gbk = test.changeCharset(utf16le, CharsetEncoding.UTF_16LE, CharsetEncoding.GBK);
+		gbk = CharsetEncoding.changeCharset(utf16le, CharsetEncoding.UTF_16LE, CharsetEncoding.GBK);
 		System.out.println("再把UTF-16LE码的字符串转换成GBK码: " + gbk);
 		System.out.println();
-		String utf16 = test.toUTF_16(str);
+		String utf16 = CharsetEncoding.toUTF_16(str);
 		System.out.println("转换成UTF-16码:" + utf16);
-		gbk = test.changeCharset(utf16, CharsetEncoding.UTF_16LE, CharsetEncoding.GBK);
+		gbk = CharsetEncoding.changeCharset(utf16, CharsetEncoding.UTF_16LE, CharsetEncoding.GBK);
 		System.out.println("再把UTF-16码的字符串转换成GBK码: " + gbk);
 		try {
 			String s = new String("中文".getBytes("UTF-8"), "UTF-8");
