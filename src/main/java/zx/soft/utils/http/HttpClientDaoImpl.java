@@ -15,7 +15,6 @@ import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.EntityEnclosingMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.PutMethod;
 import org.apache.commons.httpclient.methods.RequestEntity;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.httpclient.params.HttpClientParams;
@@ -40,7 +39,7 @@ import zx.soft.utils.log.LogbackUtil;
 
 /**
  * HTTP工具类
- * 
+ *
  * @author wanggang
  *
  */
@@ -142,23 +141,16 @@ public class HttpClientDaoImpl implements ClientDao {
 		return response.toString();
 	}
 
-	public static void doPostAndPutKeepAlive(String url, String data, String method) {
+	public static String doPostAndPutKeepAlive(String url, String data) {
 
-		EntityEnclosingMethod httpMethod = null;
-		if ("post".equals(method)) {
-			httpMethod = new PostMethod(url);
-		} else if ("put".equals(method)) {
-			httpMethod = new PutMethod(url);
-		} else {
-			return;
-		}
+		EntityEnclosingMethod httpMethod = new PostMethod(url);
 		httpMethod.setContentChunked(true);
 		RequestEntity requestEntity = null;
 		try {
 			requestEntity = new StringRequestEntity(data, null, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
-			return;
+			return "error";
 		}
 		httpMethod.setRequestEntity(requestEntity);
 		MultiThreadedHttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
@@ -180,13 +172,15 @@ public class HttpClientDaoImpl implements ClientDao {
 			client.executeMethod(httpMethod);
 		} catch (IOException e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
-			return;
+			return "error";
 		}
 		int responseCode = httpMethod.getStatusCode();
 		if (responseCode != 200 && responseCode != 201) {
 			System.err.println(responseCode);
 		}
 		httpMethod.releaseConnection();
+
+		return httpMethod.getStatusText();
 	}
 
 	/**
@@ -196,6 +190,9 @@ public class HttpClientDaoImpl implements ClientDao {
 		return doGet(url, cookie, "", charset, Boolean.TRUE);
 	}
 
+	/**
+	 * TODO 需要更改
+	 */
 	@Override
 	public String doPost(String url, String data) {
 		CloseableHttpClient httpClient = HttpClientBuilder.create().build();
