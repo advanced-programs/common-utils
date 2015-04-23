@@ -13,7 +13,7 @@ import zx.soft.utils.log.LogbackUtil;
 
 /**
  * 时间工具类
- * 
+ *
  * @author wanggang
  *
  */
@@ -73,11 +73,11 @@ public class TimeUtils {
 	}
 
 	/**
-	 * 将Solr返回的时间串转换成可读性较好的格式，并提前N小时
+	 * 将Solr返回的时间串转换成可读性较好的格式，并提前N小时，Solr提前8小时
 	 */
 	public static String transStrToCommonDateStr(String str, int hours) {
 		try {
-			return LONG_FORMAT.format(dateFormat.parse(str).getTime() - 8 * 3600 * 1000);
+			return LONG_FORMAT.format(dateFormat.parse(str).getTime() - hours * 3600 * 1000);
 		} catch (ParseException e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			return "";
