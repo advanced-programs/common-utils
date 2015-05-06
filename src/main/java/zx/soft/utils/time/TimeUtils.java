@@ -106,7 +106,7 @@ public class TimeUtils {
 	 */
 	public static long transTimeLong(String str) {
 		try {
-			Date date = LONG_FORMAT.parse("2014-08-25 12:31:45");
+			Date date = LONG_FORMAT.parse(str);
 			return date.getTime();
 		} catch (ParseException e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
