@@ -6,8 +6,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import zx.soft.utils.time.TimeUtils;
-
 public class TimeUtilsTest {
 
 	@Test
@@ -43,7 +41,7 @@ public class TimeUtilsTest {
 
 	@Test
 	public void testTransTimeLong() {
-		assertEquals(1408941105000L, TimeUtils.transTimeLong("2014-08-25 00:00:00"));
+		assertEquals(1408896000000L, TimeUtils.transTimeLong("2014-08-25 00:00:00"));
 	}
 
 }
