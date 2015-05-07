@@ -29,6 +29,8 @@ public class TimeUtils {
 
 	private static final SimpleDateFormat LONG_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+	private static final SimpleDateFormat TWITTER_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
 	public static void main(String[] args) {
 		System.out.println(TimeUtils.transStrToCommonDateStr("Thu Apr 10 11:40:56 CST 2014"));
 		System.out.println(TimeUtils.transStrToCommonDateStr("Thu Apr 10 11:40:56 CST 2014", 8));
@@ -107,6 +109,21 @@ public class TimeUtils {
 	public static long transTimeLong(String str) {
 		try {
 			Date date = LONG_FORMAT.parse(str);
+			return date.getTime();
+		} catch (ParseException e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * 将"2015-05-01T23:50:17.083Z"转换为long型时间戳
+	 * @param str
+	 * @return
+	 */
+	public static long transTwitterTimeLong(String str) {
+		try {
+			Date date = TWITTER_FORMAT.parse(str);
 			return date.getTime();
 		} catch (ParseException e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));

@@ -44,4 +44,9 @@ public class TimeUtilsTest {
 		assertEquals(1408896000000L, TimeUtils.transTimeLong("2014-08-25 00:00:00"));
 	}
 
+	@Test
+	public void testTransTwitterTimeLong() {
+		assertEquals(1430495417083L, TimeUtils.transTwitterTimeLong("2015-05-01T23:50:17.083Z"));
+	}
+
 }
