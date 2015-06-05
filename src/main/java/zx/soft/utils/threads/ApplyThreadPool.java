@@ -2,6 +2,8 @@ package zx.soft.utils.threads;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -11,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 多线程工具类
- * 
+ *
  * @author wanggang
  *
  */
@@ -72,6 +74,11 @@ public class ApplyThreadPool {
 		});
 
 		return result;
+	}
+
+	public static void stop(int threadsNum) {
+		ExecutorService exec = Executors.newFixedThreadPool(threadsNum);
+		exec.shutdown();
 	}
 
 }
