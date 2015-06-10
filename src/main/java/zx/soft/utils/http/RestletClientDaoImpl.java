@@ -17,7 +17,7 @@ import zx.soft.utils.log.LogbackUtil;
 
 /**
  * RESTlet客户端
- * 
+ *
  * @author wanggang
  *
  */
@@ -29,12 +29,6 @@ public class RestletClientDaoImpl implements ClientDao {
 
 	public RestletClientDaoImpl() {
 		client = new Client(new Context(), Protocol.HTTP);
-	}
-
-	public static void main(String[] args) {
-		String url = "https://api.weibo.com/2/users/show.json?source=2936099636&uid=1732243641";
-		RestletClientDaoImpl hcdi = new RestletClientDaoImpl();
-		System.out.println(hcdi.doGet(url, null));
 	}
 
 	/**

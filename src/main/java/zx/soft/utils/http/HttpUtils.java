@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.URIException;
@@ -26,7 +25,7 @@ import zx.soft.utils.log.LogbackUtil;
 
 /**
  * HTTP工具类
- * 
+ *
  * @author wanggang
  *
  */
@@ -120,20 +119,6 @@ public class HttpUtils {
 	 */
 	public static String doGet(String url, String charset) {
 		return doGet(url, "", charset, Boolean.TRUE);
-	}
-
-	/**
-	 * 测试函数
-	 * @param args
-	 * @throws IOException
-	 * @throws HttpException
-	 */
-	public static void main(String[] args) throws HttpException, IOException {
-
-		//		System.out.println(HttpUtils.doGet("http://114.112.65.13:8111/sina/users/2161358634/basic", "utf-8"));
-		//		System.out.println(HttpUtils.doGet(" http://60.169.74.26:8111/sina/users/2039654561/fromapi", "utf-8"));
-		System.out.println(HttpUtils.doGet("http://114.112.65.13:8111/sina/users/2161358634/basic"));
-
 	}
 
 }

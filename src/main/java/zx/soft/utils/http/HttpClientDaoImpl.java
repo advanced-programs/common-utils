@@ -47,12 +47,6 @@ public class HttpClientDaoImpl implements ClientDao {
 
 	private static Logger logger = LoggerFactory.getLogger(HttpClientDaoImpl.class);
 
-	public static void main(String[] args) {
-		String url = "https://api.weibo.com/2/users/show.json?source=2936099636&uid=1732243641";
-		HttpClientDaoImpl hcdi = new HttpClientDaoImpl();
-		System.out.println(hcdi.doGet(url, null));
-	}
-
 	/**
 	 * 新工具
 	 */
