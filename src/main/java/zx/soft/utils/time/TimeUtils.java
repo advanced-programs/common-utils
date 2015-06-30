@@ -193,5 +193,24 @@ public class TimeUtils {
 			throw new RuntimeException(e);
 		}
 	}
+	/**
+	 * @author donglei
+	 * @param milli
+	 * @return
+	 */
+	public static String convertMilliToStr(long milli) {
+		StringBuilder sBuilder = new StringBuilder();
+		int ms = (int) (milli % 1000);
+		milli = milli / 1000;
+		int hour = (int) (milli / 3600);
+		sBuilder = sBuilder.append(hour + "H ");
+		milli = milli % 3600;
+		int min = (int) (milli / 60);
+		sBuilder = sBuilder.append(min + "M ");
+		milli = milli % 60;
+		sBuilder = sBuilder.append(milli + "S ");
+		sBuilder = sBuilder.append(ms + "MS ");
+		return sBuilder.toString();
+	}
 
 }
