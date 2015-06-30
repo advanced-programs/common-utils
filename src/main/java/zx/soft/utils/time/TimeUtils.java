@@ -3,6 +3,7 @@ package zx.soft.utils.time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -34,6 +35,8 @@ public class TimeUtils {
 	public static void main(String[] args) {
 		System.out.println(TimeUtils.transStrToCommonDateStr("Thu Apr 10 11:40:56 CST 2014"));
 		System.out.println(TimeUtils.transStrToCommonDateStr("Thu Apr 10 11:40:56 CST 2014", 8));
+		System.out.println(TimeUtils.transToSolrDateStr(getMidnight(System.currentTimeMillis(), -31)));
+		System.out.println(TimeUtils.transToSolrDateStr(transCurrentTime(System.currentTimeMillis(), 0, 0, -31, 0)));
 	}
 
 	/**
@@ -129,6 +132,37 @@ public class TimeUtils {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
+	}
+
+	/**
+	 * 获得距离当前时间intervalDay的零点时间
+	 * @author donglei
+	 * @param gapDay
+	 * @return
+	 */
+	public static long getMidnight(long milli, int gapDay) {
+		Calendar date = Calendar.getInstance();
+		date.setTimeInMillis(milli);
+		date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH) + gapDay, 0,
+				0, 0);
+		date.set(Calendar.MILLISECOND, 0);
+		return date.getTimeInMillis();
+	}
+
+	/**
+	 * 获得获得距离当前时间intervalDay的时间
+	 * @author donglei
+	 * @param gapDay
+	 * @return
+	 */
+	public static long transCurrentTime(long milli, int gapYear, int gapMonth, int gapDay, int gapHour) {
+		Calendar date = Calendar.getInstance();
+		date.setTimeInMillis(milli);
+		date.set(Calendar.YEAR, date.get(Calendar.YEAR) + gapYear);
+		date.set(Calendar.MONTH, date.get(Calendar.MONTH) + gapMonth);
+		date.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH) + gapDay);
+		date.set(Calendar.HOUR_OF_DAY, date.get(Calendar.HOUR_OF_DAY) + gapHour);
+		return date.getTimeInMillis();
 	}
 
 }

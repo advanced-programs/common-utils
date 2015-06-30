@@ -49,4 +49,16 @@ public class TimeUtilsTest {
 		assertEquals(1430495417083L, TimeUtils.transTwitterTimeLong("2015-05-01T23:50:17.083Z"));
 	}
 
+	@Test
+	public void testGetMidnight() {
+		long midight = TimeUtils.getMidnight(1430495417083L, -1);
+		assertEquals("2015-04-30T00:00:00Z", TimeUtils.transToSolrDateStr(midight));
+	}
+
+	@Test
+	public void testTransCurrentTime() {
+		long time = TimeUtils.transCurrentTime(1430495417083L, 0, 0, -1, 0);
+		assertEquals("2015-04-30T23:50:17Z", TimeUtils.transToSolrDateStr(time));
+	}
+
 }
