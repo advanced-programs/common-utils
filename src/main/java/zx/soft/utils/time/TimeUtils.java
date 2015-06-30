@@ -37,6 +37,7 @@ public class TimeUtils {
 		System.out.println(TimeUtils.transStrToCommonDateStr("Thu Apr 10 11:40:56 CST 2014", 8));
 		System.out.println(TimeUtils.transToSolrDateStr(getMidnight(System.currentTimeMillis(), -31)));
 		System.out.println(TimeUtils.transToSolrDateStr(transCurrentTime(System.currentTimeMillis(), 0, 0, -31, 0)));
+		System.out.println(convertMilliToStr(1 * 3600 * 1000 + 30 * 60 * 1000 + 10000));
 	}
 
 	/**
@@ -163,6 +164,26 @@ public class TimeUtils {
 		date.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH) + gapDay);
 		date.set(Calendar.HOUR_OF_DAY, date.get(Calendar.HOUR_OF_DAY) + gapHour);
 		return date.getTimeInMillis();
+	}
+
+	/**
+	 * @author donglei
+	 * @param milli
+	 * @return
+	 */
+	public static String convertMilliToStr(long milli) {
+		StringBuilder sBuilder = new StringBuilder();
+		int ms = (int) (milli % 1000);
+		milli = milli / 1000;
+		int hour = (int) (milli / 3600);
+		sBuilder = sBuilder.append(hour + "H ");
+		milli = milli % 3600;
+		int min = (int) (milli / 60);
+		sBuilder = sBuilder.append(min + "M ");
+		milli = milli % 60;
+		sBuilder = sBuilder.append(milli + "S ");
+		sBuilder = sBuilder.append(ms + "MS ");
+		return sBuilder.toString();
 	}
 
 }
