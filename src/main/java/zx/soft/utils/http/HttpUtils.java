@@ -29,6 +29,7 @@ import zx.soft.utils.log.LogbackUtil;
  * @author wanggang
  *
  */
+@Deprecated
 public class HttpUtils {
 
 	private static Logger logger = LoggerFactory.getLogger(HttpUtils.class);
