@@ -1,6 +1,7 @@
 package zx.soft.utils.http;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.restlet.Client;
 import org.restlet.Context;
@@ -21,6 +22,7 @@ import zx.soft.utils.log.LogbackUtil;
  * @author wanggang
  *
  */
+@Deprecated
 public class RestletClientDaoImpl implements ClientDao {
 
 	private static Logger logger = LoggerFactory.getLogger(RestletClientDaoImpl.class);
@@ -31,11 +33,17 @@ public class RestletClientDaoImpl implements ClientDao {
 		client = new Client(new Context(), Protocol.HTTP);
 	}
 
+	@Override
+	public String doGet(String url) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	/**
 	 * GET请求，基于Client
 	 */
 	@Override
-	public String doGet(String url, String cookie) {
+	public String doGet(String url, String charset) {
 		// cookie暂未处理
 		ClientResource clientResource = new ClientResource(url);
 		clientResource.setNext(client);
@@ -46,6 +54,44 @@ public class RestletClientDaoImpl implements ClientDao {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
+	}
+
+	/**
+	 * GET请求，不基于Client
+	 */
+	public static String doGetWithoutClient(String url) {
+		ClientResource clientResource = new ClientResource(url);
+		try {
+			String result = clientResource.get().getText();
+			return result;
+		} catch (ResourceException | IOException e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public String doGet(String url, String cookie, String charset) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String doGet(String url, HashMap<String, String> headers) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String doGet(String url, HashMap<String, String> headers, String charset) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String doGet(String url, HashMap<String, String> headers, String cookie, String charset) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -65,18 +111,22 @@ public class RestletClientDaoImpl implements ClientDao {
 		}
 	}
 
-	/**
-	 * GET请求，不基于Client
-	 */
-	public static String doGetWithoutClient(String url) {
-		ClientResource clientResource = new ClientResource(url);
-		try {
-			String result = clientResource.get().getText();
-			return result;
-		} catch (ResourceException | IOException e) {
-			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
-			throw new RuntimeException(e);
-		}
+	@Override
+	public String doPost(String url, String data, String charset) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String doPostAndPutKeepAlive(String url, String data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String doPostAndPutKeepAlive(String url, String data, String charset) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

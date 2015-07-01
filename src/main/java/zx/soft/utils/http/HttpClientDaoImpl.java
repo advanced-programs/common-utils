@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpClient;
@@ -48,15 +50,46 @@ public class HttpClientDaoImpl implements ClientDao {
 	private static Logger logger = LoggerFactory.getLogger(HttpClientDaoImpl.class);
 
 	/**
-	 * 新工具
+	 * 新工具，线程安全
 	 */
+
 	@Override
-	public String doGet(String url, String cookie) {
+	public String doGet(String url) {
+		return doGet(url, "UTF-8");
+	}
+
+	@Override
+	public String doGet(String url, String charset) {
+		return doGet(url, "", charset);
+	}
+
+	@Override
+	public String doGet(String url, String cookie, String charset) {
+		return doGet(url, null, cookie, charset);
+	}
+
+	@Override
+	public String doGet(String url, HashMap<String, String> headers) {
+		return doGet(url, headers, "UTF-8");
+	}
+
+	@Override
+	public String doGet(String url, HashMap<String, String> headers, String charset) {
+		return doGet(url, headers, null, charset);
+	}
+
+	@Override
+	public String doGet(String url, HashMap<String, String> headers, String cookie, String charset) {
 		// 创建一个客户端，类似于打开一个浏览器
 		CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 		// 创建一个GET方法，类似于在浏览器地址栏中输入一个地址
 		HttpGet httpGet = new HttpGet(url);
-		if (cookie != null) {
+		if (headers != null) {
+			for (Entry<String, String> header : headers.entrySet()) {
+				httpGet.setHeader(header.getKey(), header.getValue());
+			}
+		}
+		if ((cookie != null) && (cookie.length() > 0)) {
 			httpGet.setHeader("Cookie", cookie);
 		}
 		// 类似于在浏览器中输入回车，获得网页内容
@@ -72,7 +105,7 @@ public class HttpClientDaoImpl implements ClientDao {
 		if (entity != null) {
 			// 读入内容流，并以字符串形式返回，这里指定网页编码是UTF-8
 			try {
-				result = EntityUtils.toString(entity, "utf-8");
+				result = EntityUtils.toString(entity, charset);
 				// 网页的Meta标签中指定了编码
 				EntityUtils.consume(entity); // 关闭内容流
 			} catch (ParseException | IOException e) {
@@ -89,6 +122,15 @@ public class HttpClientDaoImpl implements ClientDao {
 	}
 
 	/**
+	 * 旧工具
+	 */
+
+	@Deprecated
+	public static String doGetOld(String url, String cookie, String charset) {
+		return doGetOld(url, cookie, "", charset, Boolean.TRUE);
+	}
+
+	/**
 	 * 执行一个HTTP GET请求，返回请求响应的HTML
 	 *
 	 * @param url: 请求的URL地址
@@ -97,7 +139,8 @@ public class HttpClientDaoImpl implements ClientDao {
 	 * @param pretty: 是否美化
 	 * @return: 返回请求响应的HTML
 	 */
-	public static String doGet(String url, String cookie, String queryString, String charset, boolean pretty) {
+	@Deprecated
+	public static String doGetOld(String url, String cookie, String queryString, String charset, boolean pretty) {
 
 		StringBuffer response = new StringBuffer();
 		HttpClient client = new HttpClient();
@@ -135,13 +178,19 @@ public class HttpClientDaoImpl implements ClientDao {
 		return response.toString();
 	}
 
-	public static String doPostAndPutKeepAlive(String url, String data) {
+	@Override
+	public String doPostAndPutKeepAlive(String url, String data) {
+		return doPostAndPutKeepAlive(url, data, "UTF-8");
+	}
+
+	@Override
+	public String doPostAndPutKeepAlive(String url, String data, String charset) {
 
 		EntityEnclosingMethod httpMethod = new PostMethod(url);
 		httpMethod.setContentChunked(true);
 		RequestEntity requestEntity = null;
 		try {
-			requestEntity = new StringRequestEntity(data, null, "UTF-8");
+			requestEntity = new StringRequestEntity(data, null, charset);
 		} catch (UnsupportedEncodingException e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			return "error";
@@ -177,18 +226,16 @@ public class HttpClientDaoImpl implements ClientDao {
 		return httpMethod.getStatusText();
 	}
 
-	/**
-	 * 重载函数
-	 */
-	public static String doGet(String url, String cookie, String charset) {
-		return doGet(url, cookie, "", charset, Boolean.TRUE);
+	@Override
+	public String doPost(String url, String data) {
+		return doPost(url, data, "UTF-8");
 	}
 
 	/**
 	 * TODO 需要更改
 	 */
 	@Override
-	public String doPost(String url, String data) {
+	public String doPost(String url, String data, String charset) {
 		CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 		HttpPost httpPost = new HttpPost(url);
 		httpPost.setHeader("Content-Type", "application/json");
@@ -220,7 +267,7 @@ public class HttpClientDaoImpl implements ClientDao {
 
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
+		// TODO
 	}
 
 }
