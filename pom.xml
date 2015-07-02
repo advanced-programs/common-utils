@@ -10,15 +10,10 @@
 
 	<artifactId>common-utils</artifactId>
 	<name>Common Utils</name>
-	<version>1.1.0</version>
+	<version>1.2.0</version>
 	<description>Common Utils for Development.</description>
 
 	<dependencies>
-		<!-- Restlet组件 -->
-		<dependency>
-			<groupId>org.restlet.jse</groupId>
-			<artifactId>org.restlet</artifactId>
-		</dependency>
 		<!-- Json包 -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
@@ -38,20 +33,6 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.4.4</version>
 		</dependency>
-		<dependency>
-			<groupId>org.restlet.jse</groupId>
-			<artifactId>org.restlet.ext.jackson</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>com.fasterxml.jackson.core</groupId>
-					<artifactId>jackson-annotations</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.fasterxml.jackson.core</groupId>
-					<artifactId>jackson-databind</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 		<!-- HTTP包 -->
 		<dependency>
 			<groupId>commons-httpclient</groupId>
@@ -64,10 +45,12 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
+			<version>4.2.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpcore</artifactId>
+			<version>4.2.5</version>
 		</dependency>
 		<!-- DI包 -->
 		<dependency>
