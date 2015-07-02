@@ -24,16 +24,6 @@ import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.ParseException;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,47 +68,40 @@ public class HttpClientDaoImpl implements ClientDao {
 		return doGet(url, headers, null, charset);
 	}
 
+	// 为了适应CDH5.3.3版本，httpclient和httpcore必须微4.2.5老版本，索引CloseableHttpClient只有在新版本中才可以使用
 	@Override
 	public String doGet(String url, HashMap<String, String> headers, String cookie, String charset) {
-		// 创建一个客户端，类似于打开一个浏览器
-		CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-		// 创建一个GET方法，类似于在浏览器地址栏中输入一个地址
-		HttpGet httpGet = new HttpGet(url);
+		StringBuffer response = new StringBuffer();
+		HttpClient client = new HttpClient();
+		HttpMethod method = new GetMethod(url);
 		if (headers != null) {
 			for (Entry<String, String> header : headers.entrySet()) {
-				httpGet.setHeader(header.getKey(), header.getValue());
+				method.setRequestHeader(header.getKey(), header.getValue());
 			}
 		}
 		if ((cookie != null) && (cookie.length() > 0)) {
-			httpGet.setHeader("Cookie", cookie);
+			method.setRequestHeader("Cookie", cookie);
 		}
-		// 类似于在浏览器中输入回车，获得网页内容
-		HttpResponse response = null;
 		try {
-			response = httpClient.execute(httpGet);
-		} catch (IOException e) {
-			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
-		}
-		// 查看返回内容，类似于在浏览器中查看网页源码
-		HttpEntity entity = response.getEntity();
-		String result = null;
-		if (entity != null) {
-			// 读入内容流，并以字符串形式返回，这里指定网页编码是UTF-8
-			try {
-				result = EntityUtils.toString(entity, charset);
-				// 网页的Meta标签中指定了编码
-				EntityUtils.consume(entity); // 关闭内容流
-			} catch (ParseException | IOException e) {
-				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			client.executeMethod(method);
+			if (method.getStatusCode() == HttpStatus.SC_OK) {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(method.getResponseBodyAsStream(),
+						charset));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					response.append(line);
+				}
+				reader.close();
 			}
-		}
-		try {
-			httpClient.close();
+		} catch (URIException e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		} catch (IOException e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+		} finally {
+			method.releaseConnection();
+			//			client.getHttpConnectionManager().closeIdleConnections(1000);
 		}
-
-		return result;
+		return response.toString();
 	}
 
 	/**
@@ -236,33 +219,9 @@ public class HttpClientDaoImpl implements ClientDao {
 	 */
 	@Override
 	public String doPost(String url, String data, String charset) {
-		CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-		HttpPost httpPost = new HttpPost(url);
-		httpPost.setHeader("Content-Type", "application/json");
-		CloseableHttpResponse response = null;
-		try {
-			HttpEntity entity = new StringEntity(data, "UTF-8");
-			httpPost.setEntity(entity);
-			response = httpClient.execute(httpPost);
-			int result = response.getStatusLine().getStatusCode();
-			if (result != 200) {
-				logger.error("POST request fials with data={}", data);
-			}
-			HttpEntity entity2 = response.getEntity();
-			EntityUtils.consume(entity2);
-			return result + "";
-		} catch (IOException e) {
-			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
-			throw new RuntimeException(e);
-		} finally {
-			try {
-				response.close();
-				httpClient.close();
-			} catch (IOException e) {
-				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
-				throw new RuntimeException(e);
-			}
-		}
+		// 为了适应CDH5.3.3版本，httpclient和httpcore必须微4.2.5老版本
+		// TODO
+		return null;
 	}
 
 	@Override
