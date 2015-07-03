@@ -16,4 +16,11 @@ public class JavaPattern {
 		return str.matches("^[-+]?(([0-9A-Za-z]+)([.]([0-9A-Za-z]+))?|([.]([0-9A-Za-z]+))?)$");
 	}
 
+	/**
+	 * 判断是否全部为中文
+	 */
+	public static boolean isAllChinese(String str) {
+		return str.matches("[\u4E00-\u9FA5]+");
+	}
+
 }

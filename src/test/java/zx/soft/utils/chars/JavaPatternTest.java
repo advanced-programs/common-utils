@@ -20,13 +20,33 @@ public class JavaPatternTest {
 	private static final String str6 = "122Gssg888测试";
 
 	@Test
-	public void test() {
+	public void testIsAllNum() {
+		assertTrue(JavaPattern.isAllNum(str1));
+		assertFalse(JavaPattern.isAllNum(str2));
+		assertFalse(JavaPattern.isAllNum(str3));
+		assertFalse(JavaPattern.isAllNum(str4));
+		assertFalse(JavaPattern.isAllNum(str5));
+		assertFalse(JavaPattern.isAllNum(str6));
+	}
+
+	@Test
+	public void testIsAllNumAndLetter() {
 		assertTrue(JavaPattern.isAllNumAndLetter(str1));
 		assertTrue(JavaPattern.isAllNumAndLetter(str2));
 		assertTrue(JavaPattern.isAllNumAndLetter(str3));
 		assertTrue(JavaPattern.isAllNumAndLetter(str4));
 		assertFalse(JavaPattern.isAllNumAndLetter(str5));
 		assertFalse(JavaPattern.isAllNumAndLetter(str6));
+	}
+
+	@Test
+	public void testIsAllChinese() {
+		assertFalse(JavaPattern.isAllChinese(str1));
+		assertFalse(JavaPattern.isAllChinese(str2));
+		assertFalse(JavaPattern.isAllChinese(str3));
+		assertFalse(JavaPattern.isAllChinese(str4));
+		assertTrue(JavaPattern.isAllChinese(str5));
+		assertFalse(JavaPattern.isAllChinese(str6));
 	}
 
 }
