@@ -71,7 +71,6 @@ public class HttpClientDaoImpl implements ClientDao {
 	// 为了适应CDH5.3.3版本，httpclient和httpcore必须微4.2.5老版本，索引CloseableHttpClient只有在新版本中才可以使用
 	@Override
 	public String doGet(String url, HashMap<String, String> headers, String cookie, String charset) {
-		StringBuffer response = new StringBuffer();
 		HttpClient client = new HttpClient();
 		HttpMethod method = new GetMethod(url);
 		if (headers != null) {
@@ -84,24 +83,17 @@ public class HttpClientDaoImpl implements ClientDao {
 		}
 		try {
 			client.executeMethod(method);
-			if (method.getStatusCode() == HttpStatus.SC_OK) {
-				BufferedReader reader = new BufferedReader(new InputStreamReader(method.getResponseBodyAsStream(),
-						charset));
-				String line;
-				while ((line = reader.readLine()) != null) {
-					response.append(line);
-				}
-				reader.close();
-			}
+			return method.getResponseBodyAsString();
 		} catch (URIException e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			throw new RuntimeException(e);
 		} catch (IOException e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			throw new RuntimeException(e);
 		} finally {
 			method.releaseConnection();
 			//			client.getHttpConnectionManager().closeIdleConnections(1000);
 		}
-		return response.toString();
 	}
 
 	/**
