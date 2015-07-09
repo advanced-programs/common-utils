@@ -22,15 +22,15 @@ public class TimeUtils {
 
 	private static Logger logger = LoggerFactory.getLogger(TimeUtils.class);
 
-	//	private static DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);
+	private static final DateFormat SINA_API_FORMAT = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);
 
-	private static DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+	private static final DateFormat SOLR_RETURN_FORMAT = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
 
-	private static final SimpleDateFormat SOLR_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+	private static final DateFormat SOLR_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-	private static final SimpleDateFormat LONG_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private static final DateFormat LONG_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-	private static final SimpleDateFormat TWITTER_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+	private static final DateFormat TWITTER_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
 	public static void main(String[] args) {
 		System.out.println(TimeUtils.transStrToCommonDateStr("Thu Apr 10 11:40:56 CST 2014"));
@@ -70,7 +70,7 @@ public class TimeUtils {
 	 */
 	public static String transStrToCommonDateStr(String str) {
 		try {
-			return LONG_FORMAT.format(dateFormat.parse(str));
+			return LONG_FORMAT.format(SOLR_RETURN_FORMAT.parse(str));
 		} catch (ParseException e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			return "";
@@ -83,7 +83,7 @@ public class TimeUtils {
 	 */
 	public static String transStrToCommonDateStr(String str, int hours) {
 		try {
-			return LONG_FORMAT.format(dateFormat.parse(str).getTime() - hours * 3600 * 1000);
+			return LONG_FORMAT.format(SOLR_RETURN_FORMAT.parse(str).getTime() - hours * 3600 * 1000);
 		} catch (ParseException e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			return "";
@@ -144,8 +144,7 @@ public class TimeUtils {
 	public static long getMidnight(long milli, int gapDay) {
 		Calendar date = Calendar.getInstance();
 		date.setTimeInMillis(milli);
-		date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH) + gapDay, 0,
-				0, 0);
+		date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH) + gapDay, 0, 0, 0);
 		date.set(Calendar.MILLISECOND, 0);
 		return date.getTimeInMillis();
 	}
@@ -184,6 +183,15 @@ public class TimeUtils {
 		sBuilder = sBuilder.append(milli + "S ");
 		sBuilder = sBuilder.append(ms + "MS ");
 		return sBuilder.toString();
+	}
+
+	public static Date tranSinaApiDate(String timeStr) {
+		try {
+			return SINA_API_FORMAT.parse(timeStr);
+		} catch (ParseException e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			throw new RuntimeException(e);
+		}
 	}
 
 }

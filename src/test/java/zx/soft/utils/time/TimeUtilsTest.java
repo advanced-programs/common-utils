@@ -4,9 +4,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Date;
+
 import org.junit.Test;
 
 public class TimeUtilsTest {
+
+	@Test
+	public void testSINA_API_FORMAT() {
+		Date date = TimeUtils.tranSinaApiDate("Sat May 08 05:06:45 +0800 2010");
+		assertEquals("Sat May 08 05:06:45 CST 2010", date.toString());
+	}
 
 	@Test
 	public void testTransToSolrDateStr() {
