@@ -83,7 +83,14 @@ public class HttpClientDaoImpl implements ClientDao {
 		}
 		try {
 			client.executeMethod(method);
-			return method.getResponseBodyAsString();
+			StringBuffer sb = new StringBuffer();
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(method.getResponseBodyAsStream()));) {
+				String str = "";
+				while ((str = br.readLine()) != null) {
+					sb.append(str);
+				}
+			}
+			return sb.toString();
 		} catch (URIException e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
