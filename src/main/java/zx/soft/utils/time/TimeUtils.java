@@ -165,14 +165,6 @@ public class TimeUtils {
 		return date.getTimeInMillis();
 	}
 
-	public static Date tranSinaApiDate(String timeStr) {
-		try {
-			return SINA_API_FORMAT.parse(timeStr);
-		} catch (ParseException e) {
-			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
-			throw new RuntimeException(e);
-		}
-	}
 	/**
 	 * @author donglei
 	 * @param milli
@@ -193,4 +185,12 @@ public class TimeUtils {
 		return sBuilder.toString();
 	}
 
+	public static Date tranSinaApiDate(String timeStr) {
+		try {
+			return SINA_API_FORMAT.parse(timeStr);
+		} catch (ParseException e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			throw new RuntimeException(e);
+		}
+	}
 }
