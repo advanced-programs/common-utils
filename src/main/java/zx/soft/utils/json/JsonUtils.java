@@ -7,15 +7,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.utils.log.LogbackUtil;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * JSON工具类
- * 
+ *
  * @author wanggang
  *
  */
