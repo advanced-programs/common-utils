@@ -42,6 +42,10 @@ public interface ClientDao {
 
 	public String doPostAndPutKeepAlive(String url, String data, String charset);
 
+	public String doPostAndGetResponse(String url, String data);
+
+	public String doPostAndGetResponse(String url, String data, String charset);
+
 	/**
 	 * 关闭资源
 	 */

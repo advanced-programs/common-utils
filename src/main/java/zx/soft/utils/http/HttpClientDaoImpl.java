@@ -167,7 +167,6 @@ public class HttpClientDaoImpl implements ClientDao {
 
 	@Override
 	public String doPostAndPutKeepAlive(String url, String data, String charset) {
-
 		EntityEnclosingMethod httpMethod = new PostMethod(url);
 		httpMethod.setContentChunked(true);
 		RequestEntity requestEntity = null;
@@ -191,6 +190,7 @@ public class HttpClientDaoImpl implements ClientDao {
 		httpMethod.getParams()
 				.setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler(3, false));
 		httpMethod.addRequestHeader("Connection", "close");
+		httpMethod.addRequestHeader("Content-Type", "application/json");
 		client.getParams().setBooleanParameter("http.protocol.expect-continue", false);
 
 		try {
@@ -206,6 +206,98 @@ public class HttpClientDaoImpl implements ClientDao {
 		httpMethod.releaseConnection();
 
 		return httpMethod.getStatusText();
+	}
+
+	@Override
+	public String doPostAndGetResponse(String url, String data) {
+		return doPostAndGetResponse(url, data, "UTF-8");
+	}
+
+	@Override
+	public String doPostAndGetResponse(String url, String data, String charset) {
+		EntityEnclosingMethod httpMethod = new PostMethod(url);
+		httpMethod.setContentChunked(true);
+		RequestEntity requestEntity = null;
+		try {
+			requestEntity = new StringRequestEntity(data, null, charset);
+		} catch (UnsupportedEncodingException e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			return "error";
+		}
+		httpMethod.setRequestEntity(requestEntity);
+		MultiThreadedHttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
+		HttpConnectionManagerParams params = connectionManager.getParams();
+		params.setMaxTotalConnections(200);
+		params.setDefaultMaxConnectionsPerHost(150);
+		params.setConnectionTimeout(30000);
+		params.setSoTimeout(30000);
+		HttpClientParams clientParams = new HttpClientParams();
+		clientParams.setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
+		org.apache.commons.httpclient.HttpClient client = new org.apache.commons.httpclient.HttpClient(clientParams,
+				connectionManager);
+		httpMethod.getParams()
+				.setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler(3, false));
+		httpMethod.addRequestHeader("Connection", "close");
+		httpMethod.addRequestHeader("Content-Type", "application/json");
+		client.getParams().setBooleanParameter("http.protocol.expect-continue", false);
+
+		try {
+			client.executeMethod(httpMethod);
+			int responseCode = httpMethod.getStatusCode();
+			if (responseCode != 200 && responseCode != 201) {
+				System.err.println(responseCode);
+			}
+			return httpMethod.getResponseBodyAsString();
+		} catch (IOException e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+		} finally {
+			httpMethod.releaseConnection();
+		}
+		return "error";
+
+	}
+
+	public EntityEnclosingMethod doPostAndKeepAlive(String url, String data, String charset) {
+
+		EntityEnclosingMethod httpMethod = new PostMethod(url);
+		httpMethod.setContentChunked(true);
+		RequestEntity requestEntity = null;
+		try {
+			requestEntity = new StringRequestEntity(data, null, charset);
+		} catch (UnsupportedEncodingException e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			return null;
+		}
+		httpMethod.setRequestEntity(requestEntity);
+		MultiThreadedHttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
+		HttpConnectionManagerParams params = connectionManager.getParams();
+		params.setMaxTotalConnections(200);
+		params.setDefaultMaxConnectionsPerHost(150);
+		params.setConnectionTimeout(30000);
+		params.setSoTimeout(30000);
+		HttpClientParams clientParams = new HttpClientParams();
+		clientParams.setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
+		org.apache.commons.httpclient.HttpClient client = new org.apache.commons.httpclient.HttpClient(clientParams,
+				connectionManager);
+		httpMethod.getParams()
+				.setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler(3, false));
+		httpMethod.addRequestHeader("Connection", "close");
+		httpMethod.addRequestHeader("Content-Type", "application/json");
+		client.getParams().setBooleanParameter("http.protocol.expect-continue", false);
+
+		try {
+			client.executeMethod(httpMethod);
+		} catch (IOException e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			return null;
+		}
+		int responseCode = httpMethod.getStatusCode();
+		if (responseCode != 200 && responseCode != 201) {
+			logger.error(responseCode + "");
+		}
+		httpMethod.releaseConnection();
+
+		return httpMethod;
 	}
 
 	@Override

@@ -21,6 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class JsonNodeUtils {
 
+	public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
 	/**
 	 * 日志输出
 	 */
@@ -40,9 +42,8 @@ public class JsonNodeUtils {
 			return jsonNode;
 		}
 
-		ObjectMapper objectMapper = new ObjectMapper();
 		try {
-			jsonNode = objectMapper.readTree(jsonStr);
+			jsonNode = OBJECT_MAPPER.readTree(jsonStr);
 		} catch (JsonParseException e) {
 			logger.error("When JsonUtils Process getJsonNode JsonParseException", e);
 		} catch (JsonMappingException e) {
