@@ -14,6 +14,24 @@
 	<description>Common Utils for Development.</description>
 
 	<dependencies>
+		<!-- 系统信息Gather和Report包 -->
+		<dependency>
+			<groupId>fr.inria.powerapi.sensor</groupId>
+			<artifactId>sensor-cpu-sigar</artifactId>
+			<version>1.5</version>
+		</dependency>
+		<!-- Java Native Runtime - POSIX -->
+		<dependency>
+			<groupId>com.github.jnr</groupId>
+			<artifactId>jnr-posix</artifactId>
+			<version>3.0.17</version>
+		</dependency>
+		<!-- Java Native Access Platform -->
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna-platform</artifactId>
+			<version>4.1.0</version>
+		</dependency>
 		<!-- Json包 -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
