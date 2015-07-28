@@ -8,16 +8,16 @@ import java.util.concurrent.Callable;
  * @author wanggang
  *
  */
-public class CallableImpl implements Callable<String> {
+public class CallableImpl<T> implements Callable<T> {
 
-	private CallableTask callableTask;
+	private CallableTask<T> callableTask;
 
-	public CallableImpl(CallableTask callableTask) {
+	public CallableImpl(CallableTask<T> callableTask) {
 		this.callableTask = callableTask;
 	}
 
 	@Override
-	public String call() throws Exception {
+	public T call() throws Exception {
 		return callableTask.doTask();
 	}
 

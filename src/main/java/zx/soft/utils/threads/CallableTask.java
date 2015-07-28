@@ -6,8 +6,8 @@ package zx.soft.utils.threads;
  * @author wanggang
  *
  */
-public interface CallableTask {
+public interface CallableTask<T> {
 
-	String doTask();
+	T doTask();
 
 }

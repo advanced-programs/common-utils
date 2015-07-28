@@ -19,21 +19,21 @@ import zx.soft.utils.log.LogbackUtil;
  * @author wanggang
  *
  */
-public class CallableGather {
+public class CallableGather<T> {
 
 	private static Logger logger = LoggerFactory.getLogger(CallableGather.class);
 
 	// 初始化线程池服务
 	private ExecutorService executor;
 	// Future对象列表，存放Callable任务
-	private List<Future<String>> futures;
-	// Callable任务实现类
-	private Callable<String> callable;
+	private List<Future<T>> futures;
+	// Callable任务实现类，任务列表
+	private List<Callable<T>> callables;
 
-	public CallableGather(int threadNum, Callable<String> callable) {
+	public CallableGather(int threadNum, List<Callable<T>> callables) {
 		logger.info("Thread pool'size:{}", threadNum);
 		this.executor = Executors.newFixedThreadPool(threadNum);
-		this.callable = callable;
+		this.callables = callables;
 		futures = new ArrayList<>();
 	}
 
@@ -42,10 +42,10 @@ public class CallableGather {
 	 *
 	 * @param count
 	 */
-	private void addCallables(int count) {
-		for (int i = 0; i < count; i++) {
+	private void addCallables() {
+		for (Callable<T> callable : callables) {
 			// 提交Callable任务用于线程执行
-			Future<String> future = executor.submit(callable);
+			Future<T> future = executor.submit(callable);
 			// 添加Future
 			futures.add(future);
 		}
@@ -57,10 +57,10 @@ public class CallableGather {
 	 *
 	 * @return
 	 */
-	public List<String> gatherResult(int count) {
-		addCallables(count);
-		List<String> result = new ArrayList<>();
-		for (Future<String> future : futures) {
+	public List<T> gatherResult() {
+		addCallables();
+		List<T> result = new ArrayList<>();
+		for (Future<T> future : futures) {
 			try {
 				result.add(future.get());
 			} catch (InterruptedException | ExecutionException e) {
