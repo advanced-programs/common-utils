@@ -8,6 +8,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  *  多线执行结果汇总
  *
@@ -15,18 +18,19 @@ import java.util.concurrent.Future;
  *
  */
 public class AwesomeThreadPool {
+	private static Logger logger = LoggerFactory.getLogger(AwesomeThreadPool.class);
 
 	/**
-	 * 执行多线程结果汇总
-	 *
-	 * @param threadNum 线程数
-	 * @param calls
-	 * @param cls
+	 * 启动线程池，并得到运行结果
+	 * @param num 线程池的大小
+	 * @param calls 要运行的任务
+	 * @param cls 返回结果类型
 	 * @return
 	 */
-	public static <T> List<T> runCallables(int threadNum, List<Callable<T>> calls, Class<T> cls) {
-		List<T> results = new ArrayList<>();
-		ExecutorService executor = Executors.newFixedThreadPool(threadNum);
+	public static <T> List<T> runCallables(int num, List<Callable<T>> calls, Class<T> cls) {
+		long start = System.currentTimeMillis();
+		List<T> results = new ArrayList<T>();
+		ExecutorService executor = Executors.newFixedThreadPool(num);
 		try {
 			List<Future<T>> list = new ArrayList<>();
 			for (Callable<T> call : calls) {
@@ -37,12 +41,13 @@ public class AwesomeThreadPool {
 				try {
 					results.add(fut.get());
 				} catch (InterruptedException | ExecutionException e) {
-					e.printStackTrace();
+					logger.info("Exception : {}", e.getMessage());
 				}
 			}
 		} finally {
 			executor.shutdown();
 		}
+		logger.info("线程池运行耗时: {}ms", System.currentTimeMillis() - start);
 		return results;
 	}
 

@@ -23,6 +23,11 @@ public class RegexUtils {
 			System.out.println(findMatchStrs("#合肥论坛类12:429,296#芜湖论坛类123:347#蚌埠论坛类213:445", "#(.*?):", false));
 			System.out.println("#合肥论坛类:429,296#芜湖论坛类:347#蚌埠论坛类:445".replaceAll("#(.*?):", "%%%"));
 			System.out.println("#合肥论坛类:429,296#芜湖论坛类:347#蚌埠论坛类:445".replaceAll("(\\d+)(\\,\\d+)*", "%%%"));
+			System.out.println("http://www.iteye.com/problems/75335".replaceAll(
+					"[http|https]+[://]+[0-9A-Za-z:/[-]_#[?][=][.][&]]*", "DDDDD"));
+			String content = "http://www.iteye.com/problems/75335";
+			System.out.println(content.replaceAll("[http|https]+[://]+[0-9A-Za-z:/[-]_#[?][=][.][&]]*", ""));
+			System.out.println(content);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
