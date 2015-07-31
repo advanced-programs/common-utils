@@ -91,7 +91,7 @@ public class TopN {
 	}
 
 	public static void main(String[] args) {
-		int N = 4;
+		int N = 100;
 		Map<String, Integer> maps = new HashMap<String, Integer>();
 		maps.put("3", 3);
 		maps.put("10", 10);

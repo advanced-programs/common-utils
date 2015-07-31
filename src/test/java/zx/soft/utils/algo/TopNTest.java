@@ -14,6 +14,11 @@ import zx.soft.utils.algo.TopN.KeyValue;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 
+/**
+ *
+ * @author donglei
+ *
+ */
 public class TopNTest {
 	private Map<String, Integer> maps = new HashMap<String, Integer>();
 	private Multiset<String> counts = HashMultiset.create();

@@ -9,6 +9,11 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
+/**
+ * IO工具类
+ * @author donglei
+ *
+ */
 public class IOUtils {
 
 	/**

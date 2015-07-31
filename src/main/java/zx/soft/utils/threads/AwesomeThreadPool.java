@@ -27,7 +27,7 @@ public class AwesomeThreadPool {
 	 * @param cls 返回结果类型
 	 * @return
 	 */
-	public static <T> List<T> runCallables(int num, List<Callable<T>> calls, Class<T> cls) {
+	public static <T> List<T> runCallables(int num, List<Callable<T>> calls) {
 		long start = System.currentTimeMillis();
 		List<T> results = new ArrayList<T>();
 		ExecutorService executor = Executors.newFixedThreadPool(num);

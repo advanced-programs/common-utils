@@ -15,7 +15,7 @@ public class AwesomeThreadPoolTest {
 		for (int i = 0; i < 10; i++) {
 			lists.add(new MyCallable());
 		}
-		List<String> strs = AwesomeThreadPool.runCallables(5, lists, String.class);
+		List<String> strs = AwesomeThreadPool.runCallables(5, lists);
 		Assert.assertTrue(strs.size() == 10);
 	}
 

@@ -4,8 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
 /**
- * @author hwdlei
- * @version 1.0.0
+ * @author donglei
+ * @since 1.0.0
  */
 public class StringUtils {
 
