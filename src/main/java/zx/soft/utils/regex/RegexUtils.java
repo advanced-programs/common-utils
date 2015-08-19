@@ -28,6 +28,7 @@ public class RegexUtils {
 			String content = "http://www.iteye.com/problems/75335";
 			System.out.println(content.replaceAll("[http|https]+[://]+[0-9A-Za-z:/[-]_#[?][=][.][&]]*", ""));
 			System.out.println(content);
+			System.out.println(findMatchStrs("sum(1):desc", "\\((.)\\)", false));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

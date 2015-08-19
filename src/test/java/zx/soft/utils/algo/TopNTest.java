@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import zx.soft.utils.algo.TopN.KeyValue;
+import zx.soft.utils.json.JsonUtils;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
@@ -68,7 +69,7 @@ public class TopNTest {
 	@Test
 	public void testTopNOnValue1() {
 		List<KeyValue<String, Integer>> keys = TopN.<String, Integer> topNOnValue(maps, 2);
-		System.out.println(keys);
+		System.out.println(JsonUtils.toJsonWithoutPretty(keys));
 		Assert.assertTrue("[KeyValue{key=123, value=123}, KeyValue{key=120, value=120}]".equals(keys.toString()));
 	}
 

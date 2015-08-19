@@ -1,5 +1,7 @@
 package zx.soft.utils.string;
 
+import com.google.common.base.MoreObjects;
+
 /**
  * 字符串连接工具类
  * @author donglei
@@ -31,6 +33,13 @@ public class StringConcatHelper {
 		sBuilder.delete(0, sBuilder.length());
 		sBuilder.trimToSize();
 
+	}
+
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(StringConcatHelper.class).add("string", sBuilder.toString())
+				.add("method", method.name()).toString();
 	}
 
 }

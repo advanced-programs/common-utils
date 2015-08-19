@@ -91,7 +91,7 @@ public class TimeUtils {
 	public static String transStrToCommonDateStr(String str, int hours) {
 		try {
 			return LONG_FORMAT.format(SOLR_RETURN_FORMAT.parse(str).getTime() - hours * 3600 * 1000);
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			return "";
 			//			throw new RuntimeException();
