@@ -1,5 +1,8 @@
 package zx.soft.utils.string;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.google.common.base.MoreObjects;
 
 /**
@@ -8,11 +11,14 @@ import com.google.common.base.MoreObjects;
  *
  */
 public class StringConcatHelper {
-	private StringBuilder sBuilder = new StringBuilder();
+	// 字符串缓存
+	private Map<Object, StringBuilder> mBuilder = new HashMap<>();
+	private static final String DEFAULT = "default";
 	private ConcatMethod method;
 
 	public StringConcatHelper(ConcatMethod method) {
 		this.method = method;
+		mBuilder.put(DEFAULT, new StringBuilder());
 	}
 
 	public void setMethod(ConcatMethod method) {
@@ -21,24 +27,64 @@ public class StringConcatHelper {
 	}
 
 	public void add(String item) {
+		add(DEFAULT, item);
+	}
+
+	public void add(Object key, String item) {
+		StringBuilder sBuilder = null;
+		if (mBuilder.containsKey(key)) {
+			sBuilder = mBuilder.get(key);
+		} else {
+			sBuilder = new StringBuilder();
+			mBuilder.put(key, sBuilder);
+		}
 		method.concat(sBuilder, item);
 	}
 
 	public String getString() {
-		return sBuilder.toString();
+		return getString(DEFAULT);
 
 	}
 
-	public void clear() {
-		sBuilder.delete(0, sBuilder.length());
-		sBuilder.trimToSize();
+	public String getString(Object key) {
+		if (mBuilder.containsKey(key)) {
+			return mBuilder.get(key).toString();
+		} else {
+			return "";
+		}
+	}
 
+	public Map<Object, String> getALLString() {
+		Map<Object, String> maps = new HashMap<>();
+		for(Map.Entry<Object, StringBuilder> entry : mBuilder.entrySet()) {
+			if (DEFAULT.equals(entry.getKey())) {
+				continue;
+			}
+			maps.put(entry.getKey(), entry.getValue().toString());
+		}
+		return maps;
+	}
+
+	public void clear() {
+		clearKey(DEFAULT);
+	}
+
+	public void clearKey(Object key) {
+		if (mBuilder.containsKey(key)) {
+			mBuilder.get(key).setLength(0);
+			mBuilder.get(key).trimToSize();
+		}
+	}
+
+	public void clearAll() {
+		mBuilder.clear();
+		mBuilder.put(DEFAULT, new StringBuilder());
 	}
 
 
 	@Override
 	public String toString() {
-		return MoreObjects.toStringHelper(StringConcatHelper.class).add("string", sBuilder.toString())
+		return MoreObjects.toStringHelper(StringConcatHelper.class).add("string", mBuilder.toString())
 				.add("method", method.name()).toString();
 	}
 
