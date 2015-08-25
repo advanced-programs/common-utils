@@ -19,6 +19,10 @@ public class JavaPatternTest {
 
 	private static final String str6 = "122Gssg888测试";
 
+	private static final String str7 = "126ede@qq.com";
+
+	private static final String str8 = "123.325";
+
 	@Test
 	public void testIsAllNum() {
 		assertTrue(JavaPattern.isAllNum(str1));
@@ -47,6 +51,33 @@ public class JavaPatternTest {
 		assertFalse(JavaPattern.isAllChinese(str4));
 		assertTrue(JavaPattern.isAllChinese(str5));
 		assertFalse(JavaPattern.isAllChinese(str6));
+	}
+
+	@Test
+	public void testIsEmail() {
+		assertTrue(JavaPattern.isEmail(str7));
+	}
+
+	@Test
+	public void testIsChinese() {
+		assertFalse(JavaPattern.isChinese(str1));
+		assertFalse(JavaPattern.isChinese(str2));
+		assertFalse(JavaPattern.isChinese(str3));
+		assertFalse(JavaPattern.isChinese(str4));
+		assertTrue(JavaPattern.isChinese(str5));
+		assertFalse(JavaPattern.isChinese(str6));
+	}
+
+	@Test
+	public void testIsDouble() {
+		assertTrue(JavaPattern.isDouble(str8));
+		assertFalse(JavaPattern.isDouble(str1));
+	}
+
+	@Test
+	public void testIsInteger() {
+		assertTrue(JavaPattern.isInteger(str1));
+		assertFalse(JavaPattern.isInteger(str8));
 	}
 
 }

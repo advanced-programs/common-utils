@@ -11,22 +11,17 @@ import zx.soft.utils.string.StringUtils;
 public class RegexUtils {
 
 	public static void main(String[] args) throws IOException {
-		try {
-			//			String s = null;
-			//			s = createJson("#合肥论坛类:429,296#芜湖论坛类:347#蚌埠论坛类:445");
-			//			System.err.println(s);
-			//			s = createJson("#合肥论坛类12:429,296#芜湖论坛类123:347#蚌埠论坛类213:445");
-			//			System.err.println(s);
-			System.out.println(findMatchStrs("#合肥论坛类:429,296#芜湖论坛类:347#蚌埠论坛类:445", "#(.*?):", true));
-			System.out.println(findMatchStrs("#合肥论坛类:429,296#芜湖论坛类:347#蚌埠论坛类:445", "#(.*?):", false));
-			System.out.println(findMatchStrs("#合肥论坛类12:429,296#芜湖论坛类123:347#蚌埠论坛类213:445", "#(.*?):", true));
-			System.out.println(findMatchStrs("#合肥论坛类12:429,296#芜湖论坛类123:347#蚌埠论坛类213:445", "#(.*?):", false));
-			System.out.println("#合肥论坛类:429,296#芜湖论坛类:347#蚌埠论坛类:445".replaceAll("#(.*?):", "%%%"));
-			System.out.println("#合肥论坛类:429,296#芜湖论坛类:347#蚌埠论坛类:445".replaceAll("(\\d+)(\\,\\d+)*", "%%%"));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//			String s = null;
+		//			s = createJson("#合肥论坛类:429,296#芜湖论坛类:347#蚌埠论坛类:445");
+		//			System.err.println(s);
+		//			s = createJson("#合肥论坛类12:429,296#芜湖论坛类123:347#蚌埠论坛类213:445");
+		//			System.err.println(s);
+		System.out.println(findMatchStrs("#合肥论坛类:429,296#芜湖论坛类:347#蚌埠论坛类:445", "#(.*?):", true));
+		System.out.println(findMatchStrs("#合肥论坛类:429,296#芜湖论坛类:347#蚌埠论坛类:445", "#(.*?):", false));
+		System.out.println(findMatchStrs("#合肥论坛类12:429,296#芜湖论坛类123:347#蚌埠论坛类213:445", "#(.*?):", true));
+		System.out.println(findMatchStrs("#合肥论坛类12:429,296#芜湖论坛类123:347#蚌埠论坛类213:445", "#(.*?):", false));
+		System.out.println("#合肥论坛类:429,296#芜湖论坛类:347#蚌埠论坛类:445".replaceAll("#(.*?):", "%%%"));
+		System.out.println("#合肥论坛类:429,296#芜湖论坛类:347#蚌埠论坛类:445".replaceAll("(\\d+)(\\,\\d+)*", "%%%"));
 	}
 
 	/**
@@ -65,7 +60,7 @@ public class RegexUtils {
 	 * @return
 	 */
 	public static String replaceMatchStrs(String str, String pattern, String replace) {
-		if(str != null) {
+		if (str != null) {
 			return str.replaceAll(pattern, replace);
 		}
 		return null;
