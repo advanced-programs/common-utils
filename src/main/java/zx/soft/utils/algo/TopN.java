@@ -1,6 +1,7 @@
 package zx.soft.utils.algo;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,6 +91,87 @@ public class TopN {
 		return topNList;
 	}
 
+	/**
+	 * 求List中前N个元素
+	 * @param lists
+	 * @param N
+	 * @param unique
+	 * @return
+	 */
+	public static <T extends Comparable<? super T>> List<T> topN(List<T> lists, int N, boolean unique) {
+		List<T> topNList = new ArrayList<T>();
+		for (T t : lists) {
+			int i = topNList.size() - 1;
+			for (; i >= 0; i--) {
+				if (topNList.get(i).compareTo(t) >= 0) {
+					break;
+				}
+			}
+			if (unique) {
+				if (i == -1 || topNList.get(i).compareTo(t) > 0) {
+					topNList.add(i + 1, t);
+					if (topNList.size() > N) {
+						topNList.remove(N);
+					}
+				}
+			} else {
+				topNList.add(i + 1, t);
+				if (topNList.size() > N) {
+					topNList.remove(N);
+				}
+			}
+		}
+		return topNList;
+	}
+
+	/**
+	 * 求List中前N个元素，去重
+	 * @param lists
+	 * @param N
+	 * @return
+	 */
+	public static <T extends Comparable<? super T>> List<T> topNUnique(List<T> lists, int N) {
+		return topN(lists, N, true);
+	}
+
+	/**
+	 * 求List中前N个元素
+	 * @param lists
+	 * @param N
+	 * @param unique
+	 * @param comparator 比较器
+	 * @return
+	 */
+	public static <T> List<T> topN(List<T> lists, int N, boolean unique, Comparator<T> comparator) {
+		List<T> topNList = new ArrayList<T>();
+		for (T t : lists) {
+			int i = topNList.size() - 1;
+			for (; i >= 0; i--) {
+				if (comparator.compare(topNList.get(i), t) >= 0) {
+					break;
+				}
+			}
+			if (unique) {
+				if (i == -1 || comparator.compare(topNList.get(i), t) > 0) {
+					topNList.add(i + 1, t);
+					if (topNList.size() > N) {
+						topNList.remove(N);
+					}
+				}
+			} else {
+				topNList.add(i + 1, t);
+				if (topNList.size() > N) {
+					topNList.remove(N);
+				}
+			}
+		}
+		return topNList;
+	}
+
+	public static <T> List<T> topNUnique(List<T> lists, int N, Comparator<T> comparator) {
+		return topN(lists, N, true, comparator);
+	}
+
 	public static void main(String[] args) {
 		int N = 100;
 		Map<String, Integer> maps = new HashMap<String, Integer>();
@@ -133,6 +215,42 @@ public class TopN {
 			counts.add("120");
 		}
 		System.out.println(topNOnValue(counts, N));
+
+		List<Integer> lists = new ArrayList<>();
+		lists.add(1);
+		lists.add(9);
+		lists.add(6);
+		lists.add(10);
+		lists.add(5);
+		lists.add(20);
+		lists.add(123);
+		lists.add(4);
+		lists.add(123);
+		lists.add(8);
+		lists.add(100);
+		lists.add(10);
+		lists.add(100);
+
+		System.out.println("===========================================");
+		System.out.println(lists);
+		System.out.println(topNUnique(lists, 10));
+		System.out.println(lists);
+		System.out.println(topN(lists, 10, false));
+		System.out.println(topN(lists, 7, false, new Comparator<Integer>() {
+
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				return o1 - o2;
+			}
+		}));
+		System.out.println(topNUnique(lists, 4, new Comparator<Integer>() {
+
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				return o1 - o2;
+			}
+		}));
+
 	}
 
 	public static class KeyValue<K, T extends Comparable<? super T>> {

@@ -78,6 +78,12 @@ public class JsonUtils {
 		return null;
 	}
 
+	/**
+	 * @author donglei
+	 * @param node
+	 * @param cls
+	 * @return
+	 */
 	public static <T> T getObject(JsonNode node, Class<T> cls) {
 		ObjectReader objectReader = mapper.reader(cls);
 		try {
@@ -88,6 +94,12 @@ public class JsonUtils {
 		return null;
 	}
 
+	/**
+	 * @author donglei
+	 * @param json
+	 * @param cls
+	 * @return
+	 */
 	public static <T> List<T> parseJsonArray(String json, Class<T> cls) {
 		List<T> ts = new LinkedList<T>();
 
