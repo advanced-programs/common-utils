@@ -35,14 +35,6 @@ public interface ClientDao {
 	public String doPost(String url, String data, String charset);
 
 	/**
-	 * 带连接复用的POST和PUT方法
-	 */
-
-	public String doPostAndPutKeepAlive(String url, String data);
-
-	public String doPostAndPutKeepAlive(String url, String data, String charset);
-
-	/**
 	 * 关闭资源
 	 */
 	public void close();

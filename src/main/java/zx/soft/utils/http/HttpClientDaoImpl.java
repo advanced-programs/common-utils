@@ -24,16 +24,6 @@ import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.ParseException;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,12 +32,27 @@ import zx.soft.utils.log.LogbackUtil;
 /**
  * HTTP工具类
  *
- * @author wanggang
+ * @author  xuwenjuan
  *
  */
 public class HttpClientDaoImpl implements ClientDao {
 
 	private static Logger logger = LoggerFactory.getLogger(HttpClientDaoImpl.class);
+
+	private HttpClient client;
+
+	public HttpClientDaoImpl() {
+		MultiThreadedHttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
+		HttpConnectionManagerParams params = connectionManager.getParams();
+		params.setMaxTotalConnections(200);
+		params.setDefaultMaxConnectionsPerHost(150);
+		params.setConnectionTimeout(30000);
+		params.setSoTimeout(30000);
+		HttpClientParams clientParams = new HttpClientParams();
+		clientParams.setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
+		HttpClient client = new HttpClient(clientParams, connectionManager);
+		this.client = client;
+	}
 
 	/**
 	 * 新工具，线程安全
@@ -78,47 +83,40 @@ public class HttpClientDaoImpl implements ClientDao {
 		return doGet(url, headers, null, charset);
 	}
 
+	/**
+	 * 为了适应CDH5-3.3版本，httpclient和httpcore必须为4.2.5老版本，索引CloseableHttpClient只有在新版本中才可以使用
+	 */
 	@Override
 	public String doGet(String url, HashMap<String, String> headers, String cookie, String charset) {
-		// 创建一个客户端，类似于打开一个浏览器
-		CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-		// 创建一个GET方法，类似于在浏览器地址栏中输入一个地址
-		HttpGet httpGet = new HttpGet(url);
+		HttpMethod method = new GetMethod(url);
 		if (headers != null) {
 			for (Entry<String, String> header : headers.entrySet()) {
-				httpGet.setHeader(header.getKey(), header.getValue());
+				method.setRequestHeader(header.getKey(), header.getValue());
 			}
 		}
 		if ((cookie != null) && (cookie.length() > 0)) {
-			httpGet.setHeader("Cookie", cookie);
+			method.setRequestHeader("Cookie", cookie);
 		}
-		// 类似于在浏览器中输入回车，获得网页内容
-		HttpResponse response = null;
 		try {
-			response = httpClient.execute(httpGet);
-		} catch (IOException e) {
-			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
-		}
-		// 查看返回内容，类似于在浏览器中查看网页源码
-		HttpEntity entity = response.getEntity();
-		String result = null;
-		if (entity != null) {
-			// 读入内容流，并以字符串形式返回，这里指定网页编码是UTF-8
-			try {
-				result = EntityUtils.toString(entity, charset);
-				// 网页的Meta标签中指定了编码
-				EntityUtils.consume(entity); // 关闭内容流
-			} catch (ParseException | IOException e) {
-				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			client.executeMethod(method);
+			StringBuffer sb = new StringBuffer();
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(method.getResponseBodyAsStream()));) {
+				String str = "";
+				while ((str = br.readLine()) != null) {
+					sb.append(str);
+				}
 			}
-		}
-		try {
-			httpClient.close();
+			return sb.toString();
+		} catch (URIException e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			throw new RuntimeException(e);
 		} catch (IOException e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			throw new RuntimeException(e);
+		} finally {
+			method.releaseConnection();
+			client.getHttpConnectionManager().closeIdleConnections(0);
 		}
-
-		return result;
 	}
 
 	/**
@@ -141,7 +139,6 @@ public class HttpClientDaoImpl implements ClientDao {
 	 */
 	@Deprecated
 	public static String doGetOld(String url, String cookie, String queryString, String charset, boolean pretty) {
-
 		StringBuffer response = new StringBuffer();
 		HttpClient client = new HttpClient();
 		HttpMethod method = new GetMethod(url);
@@ -175,17 +172,12 @@ public class HttpClientDaoImpl implements ClientDao {
 			method.releaseConnection();
 			//			client.getHttpConnectionManager().closeIdleConnections(1000);
 		}
+
 		return response.toString();
 	}
 
 	@Override
-	public String doPostAndPutKeepAlive(String url, String data) {
-		return doPostAndPutKeepAlive(url, data, "UTF-8");
-	}
-
-	@Override
-	public String doPostAndPutKeepAlive(String url, String data, String charset) {
-
+	public String doPost(String url, String data, String charset) {
 		EntityEnclosingMethod httpMethod = new PostMethod(url);
 		httpMethod.setContentChunked(true);
 		RequestEntity requestEntity = null;
@@ -196,19 +188,11 @@ public class HttpClientDaoImpl implements ClientDao {
 			return "error";
 		}
 		httpMethod.setRequestEntity(requestEntity);
-		MultiThreadedHttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
-		HttpConnectionManagerParams params = connectionManager.getParams();
-		params.setMaxTotalConnections(200);
-		params.setDefaultMaxConnectionsPerHost(150);
-		params.setConnectionTimeout(30000);
-		params.setSoTimeout(30000);
-		HttpClientParams clientParams = new HttpClientParams();
-		clientParams.setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
-		org.apache.commons.httpclient.HttpClient client = new org.apache.commons.httpclient.HttpClient(clientParams,
-				connectionManager);
+
 		httpMethod.getParams()
 				.setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler(3, false));
 		httpMethod.addRequestHeader("Connection", "close");
+		httpMethod.addRequestHeader("Content-Type", "application/json");
 		client.getParams().setBooleanParameter("http.protocol.expect-continue", false);
 
 		try {
@@ -229,40 +213,6 @@ public class HttpClientDaoImpl implements ClientDao {
 	@Override
 	public String doPost(String url, String data) {
 		return doPost(url, data, "UTF-8");
-	}
-
-	/**
-	 * TODO 需要更改
-	 */
-	@Override
-	public String doPost(String url, String data, String charset) {
-		CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-		HttpPost httpPost = new HttpPost(url);
-		httpPost.setHeader("Content-Type", "application/json");
-		CloseableHttpResponse response = null;
-		try {
-			HttpEntity entity = new StringEntity(data, "UTF-8");
-			httpPost.setEntity(entity);
-			response = httpClient.execute(httpPost);
-			int result = response.getStatusLine().getStatusCode();
-			if (result != 200) {
-				logger.error("POST request fials with data={}", data);
-			}
-			HttpEntity entity2 = response.getEntity();
-			EntityUtils.consume(entity2);
-			return result + "";
-		} catch (IOException e) {
-			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
-			throw new RuntimeException(e);
-		} finally {
-			try {
-				response.close();
-				httpClient.close();
-			} catch (IOException e) {
-				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
-				throw new RuntimeException(e);
-			}
-		}
 	}
 
 	@Override

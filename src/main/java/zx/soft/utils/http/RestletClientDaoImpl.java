@@ -118,18 +118,6 @@ public class RestletClientDaoImpl implements ClientDao {
 	}
 
 	@Override
-	public String doPostAndPutKeepAlive(String url, String data) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String doPostAndPutKeepAlive(String url, String data, String charset) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void close() {
 		try {
 			client.stop();
