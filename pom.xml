@@ -10,7 +10,7 @@
 
 	<artifactId>common-utils</artifactId>
 	<name>Common Utils</name>
-	<version>1.2.0</version>
+	<version>1.2.2</version>
 	<description>Common Utils for Development.</description>
 
 	<dependencies>
