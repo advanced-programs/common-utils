@@ -1,4 +1,4 @@
-package com.JUtils.image;
+package zx.soft.utils.media;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;

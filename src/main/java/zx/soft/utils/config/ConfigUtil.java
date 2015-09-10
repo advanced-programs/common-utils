@@ -10,13 +10,15 @@ import zx.soft.utils.log.LogbackUtil;
 
 /**
  * 配置文件读取类
- * 
+ *
  * @author wanggang
  *
  */
 public class ConfigUtil {
 
 	private static Logger logger = LoggerFactory.getLogger(ConfigUtil.class);
+
+	public static final Properties UTILS_PROPS = getProps("utils.properties");
 
 	public static Properties getProps(String confFileName) {
 		Properties result = new Properties();

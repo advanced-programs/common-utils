@@ -8,6 +8,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import zx.soft.utils.log.LogbackUtil;
+
 /**
  *  多线执行结果汇总
  *
@@ -15,6 +20,8 @@ import java.util.concurrent.Future;
  *
  */
 public class AwesomeThreadPool {
+
+	private static Logger logger = LoggerFactory.getLogger(AwesomeThreadPool.class);
 
 	/**
 	 * 执行多线程结果汇总
@@ -37,7 +44,7 @@ public class AwesomeThreadPool {
 				try {
 					results.add(fut.get());
 				} catch (InterruptedException | ExecutionException e) {
-					e.printStackTrace();
+					logger.error("Thread Exception:{}", LogbackUtil.expection2Str(e));
 				}
 			}
 		} finally {

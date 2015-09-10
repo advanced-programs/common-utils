@@ -31,7 +31,7 @@ public class CallableGather<T> {
 	private List<Callable<T>> callables;
 
 	public CallableGather(int threadNum, List<Callable<T>> callables) {
-		logger.info("Thread pool'size:{}", threadNum);
+		logger.info("Thread pool's size:{}", threadNum);
 		this.executor = Executors.newFixedThreadPool(threadNum);
 		this.callables = callables;
 		futures = new ArrayList<>();

@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.utils.log.LogbackUtil;
+
 /**
  * 多线程工具类
  *
@@ -37,8 +39,8 @@ public class ApplyThreadPool {
 
 					@Override
 					public void uncaughtException(Thread t, Throwable e) {
-						e.printStackTrace();
-						logger.error("Thread exception: " + t.getName(), e);
+						logger.error("Thread {} has Exception:{}", t.getName(),
+								LogbackUtil.expection2Str(new Exception(e)));
 						result.shutdown();
 					}
 
@@ -63,8 +65,8 @@ public class ApplyThreadPool {
 
 					@Override
 					public void uncaughtException(Thread t, Throwable e) {
-						e.printStackTrace();
-						logger.error("Thread exception: " + t.getName(), e);
+						logger.error("Thread {} has Exception:{}", t.getName(),
+								LogbackUtil.expection2Str(new Exception(e)));
 						result.shutdown();
 					}
 

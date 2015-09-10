@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,15 +21,17 @@ public class TimeUtils {
 
 	private static Logger logger = LoggerFactory.getLogger(TimeUtils.class);
 
-	private static final DateFormat SINA_API_FORMAT = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);
+	private static final DateFormat SINA_API_FORMAT = new SimpleDateFormat(
+			DateFormatPattern.SINA_API_FORMAT.toString(), DateFormatPattern.DEFAULT_LOCALE);
 
-	private static final DateFormat SOLR_RETURN_FORMAT = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+	private static final DateFormat SOLR_RETURN_FORMAT = new SimpleDateFormat(
+			DateFormatPattern.SOLR_RETURN_FORMAT.toString(), DateFormatPattern.DEFAULT_LOCALE);
 
-	private static final DateFormat SOLR_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+	private static final DateFormat SOLR_FORMAT = new SimpleDateFormat(DateFormatPattern.SOLR_FORMAT.toString());
 
-	private static final DateFormat LONG_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private static final DateFormat LONG_FORMAT = new SimpleDateFormat(DateFormatPattern.LONG_FORMAT.toString());
 
-	private static final DateFormat TWITTER_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+	private static final DateFormat TWITTER_FORMAT = new SimpleDateFormat(DateFormatPattern.TWITTER_FORMAT.toString());
 
 	public static void main(String[] args) {
 		System.out.println(TimeUtils.transStrToCommonDateStr("Thu Apr 10 11:40:56 CST 2014"));
