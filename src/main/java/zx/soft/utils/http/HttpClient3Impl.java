@@ -17,7 +17,7 @@ import org.apache.commons.httpclient.methods.GetMethod;
  * @author wanggang
  *
  */
-public class CHttpClient3Impl {
+public class HttpClient3Impl {
 
 	public static void main(String[] args) {
 		//

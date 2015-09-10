@@ -1,4 +1,4 @@
-package zx.soft.utils.file;
+package zx.soft.utils.io;
 
 import java.io.BufferedReader;
 import java.io.File;

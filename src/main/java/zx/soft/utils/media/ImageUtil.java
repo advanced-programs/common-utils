@@ -99,6 +99,7 @@ public class ImageUtil {
 		} catch (Exception e) {
 			throw new RuntimeException("添加图片水印操作异常");
 		}
+
 		return targetImage;
 	}
 
@@ -192,6 +193,7 @@ public class ImageUtil {
 		} catch (Exception e) {
 			throw new RuntimeException("添加文字水印操作异常");
 		}
+
 		return targetImage;
 	}
 
@@ -223,7 +225,6 @@ public class ImageUtil {
 		} catch (Exception e) {
 			throw new RuntimeException("图片压缩异常");
 		}
-
 	}
 
 	/**
@@ -304,6 +305,7 @@ public class ImageUtil {
 		} catch (Exception e) {
 			throw new RuntimeException("图片压缩操作异常");
 		}
+
 		return targetImage;
 	}
 
@@ -408,6 +410,7 @@ public class ImageUtil {
 		} catch (Exception e) {
 			throw new RuntimeException("图片透明化执行异常");
 		}
+
 		return targetImage;
 	}
 

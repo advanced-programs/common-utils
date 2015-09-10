@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
 /**
+ * 字符串处理工具
+ *
  * @author hwdlei
  * @version 1.0.0
  */
@@ -136,4 +138,5 @@ public class StringUtils {
 		String a = "";
 		System.out.println(a.getBytes().length);
 	}
+
 }

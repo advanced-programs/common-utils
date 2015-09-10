@@ -53,6 +53,7 @@ public class JsonNodeUtils {
 		} catch (Exception e) {
 			logger.error("When JsonUtils Process getJsonNode Exception", e);
 		}
+
 		return jsonNode;
 	}
 
@@ -70,6 +71,7 @@ public class JsonNodeUtils {
 		if (null != jsonNode) {
 			node = jsonNode.get(fieldName);
 		}
+
 		return node;
 	}
 
@@ -84,6 +86,7 @@ public class JsonNodeUtils {
 		if (StringUtils.isNotEmpty(fieldName) && null != parentNode) {
 			node = parentNode.get(fieldName);
 		}
+
 		return node;
 	}
 

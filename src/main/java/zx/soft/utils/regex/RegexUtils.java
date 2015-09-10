@@ -1,6 +1,5 @@
 package zx.soft.utils.regex;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -8,21 +7,13 @@ import java.util.regex.Pattern;
 
 import zx.soft.utils.string.StringUtils;
 
+/**
+ * 主要用于Redis中的站点信息丢失恢复，一般用不到
+ *
+ * @author wanggang
+ *
+ */
 public class RegexUtils {
-
-	public static void main(String[] args) throws IOException {
-		//			String s = null;
-		//			s = createJson("#合肥论坛类:429,296#芜湖论坛类:347#蚌埠论坛类:445");
-		//			System.err.println(s);
-		//			s = createJson("#合肥论坛类12:429,296#芜湖论坛类123:347#蚌埠论坛类213:445");
-		//			System.err.println(s);
-		System.out.println(findMatchStrs("#合肥论坛类:429,296#芜湖论坛类:347#蚌埠论坛类:445", "#(.*?):", true));
-		System.out.println(findMatchStrs("#合肥论坛类:429,296#芜湖论坛类:347#蚌埠论坛类:445", "#(.*?):", false));
-		System.out.println(findMatchStrs("#合肥论坛类12:429,296#芜湖论坛类123:347#蚌埠论坛类213:445", "#(.*?):", true));
-		System.out.println(findMatchStrs("#合肥论坛类12:429,296#芜湖论坛类123:347#蚌埠论坛类213:445", "#(.*?):", false));
-		System.out.println("#合肥论坛类:429,296#芜湖论坛类:347#蚌埠论坛类:445".replaceAll("#(.*?):", "%%%"));
-		System.out.println("#合肥论坛类:429,296#芜湖论坛类:347#蚌埠论坛类:445".replaceAll("(\\d+)(\\,\\d+)*", "%%%"));
-	}
 
 	/**
 	 * 从字符串中找出所有符合pattern模式的子串，group控制整个子串还是子组
@@ -49,6 +40,7 @@ public class RegexUtils {
 				strs.add(matcher.group(1));
 			}
 		}
+
 		return strs;
 	}
 
@@ -63,6 +55,7 @@ public class RegexUtils {
 		if (str != null) {
 			return str.replaceAll(pattern, replace);
 		}
+
 		return null;
 	}
 

@@ -10,6 +10,7 @@ public class LogbackUtil {
 		for (StackTraceElement stack : e.getStackTrace()) {
 			result += stack.toString() + ";";
 		}
+
 		return result.substring(0, result.length() - 1).replaceAll("\n", ",");
 	}
 

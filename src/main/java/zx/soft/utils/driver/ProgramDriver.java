@@ -8,9 +8,12 @@ import java.util.TreeMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.utils.log.LogbackUtil;
+
 /**
  * 进程驱动器，用于管理运行不同进程的
- * 
+ * 注意：这个驱动不能加入定时程序，否则不执行
+ *
  * @author wanggang
  *
  */
@@ -24,7 +27,7 @@ public class ProgramDriver {
 	Map<String, ProgramDescription> programs;
 
 	public ProgramDriver() {
-		programs = new TreeMap<String, ProgramDescription>();
+		programs = new TreeMap<>();
 	}
 
 	/**
@@ -56,7 +59,7 @@ public class ProgramDriver {
 		// 第一个参数存在，但是库中没有
 		ProgramDescription pgm = programs.get(args[0]);
 		if (pgm == null) {
-			logger.error("Unknown program '" + args[0] + "' chosen.");
+			logger.error("Unknown program '{}' chosen.", args[0]);
 			printUsage(programs);
 			System.exit(-1);
 		}
@@ -72,9 +75,9 @@ public class ProgramDriver {
 	 * 打印说明
 	 */
 	private static void printUsage(Map<String, ProgramDescription> programs) {
-		logger.error("Valid program names are:");
+		logger.error("Valid program names are: ");
 		for (Map.Entry<String, ProgramDescription> item : programs.entrySet()) {
-			logger.error("  " + item.getKey() + ": " + item.getValue().getDescription());
+			logger.error("  {}: {}", item.getKey(), item.getValue().getDescription());
 		}
 	}
 
@@ -83,7 +86,7 @@ public class ProgramDriver {
 	 */
 	private static class ProgramDescription {
 
-		static final Class<?>[] paramTypes = new Class<?>[] { String[].class };
+		static final Class<?>[] PARAM_TYPES = new Class<?>[] { String[].class };
 
 		private final Method main;
 		private final String description;
@@ -93,7 +96,7 @@ public class ProgramDriver {
 		 */
 		public ProgramDescription(Class<?> mainClass, String description) throws NoSuchMethodException,
 				SecurityException {
-			this.main = mainClass.getMethod("main", paramTypes);
+			this.main = mainClass.getMethod("main", PARAM_TYPES);
 			this.description = description;
 		}
 
@@ -104,6 +107,7 @@ public class ProgramDriver {
 			try {
 				main.invoke(null, new Object[] { args });
 			} catch (InvocationTargetException e) {
+				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 				throw e.getCause();
 			}
 		}
