@@ -33,12 +33,15 @@ public class TimeUtils {
 
 	private static final DateFormat TWITTER_FORMAT = new SimpleDateFormat(DateFormatPattern.TWITTER_FORMAT.toString());
 
+	private static final SimpleDateFormat DATE_HOUR = new SimpleDateFormat("yyyy-MM-dd,HH");
+
 	public static void main(String[] args) {
 		System.out.println(TimeUtils.transStrToCommonDateStr("Thu Apr 10 11:40:56 CST 2014"));
 		System.out.println(TimeUtils.transStrToCommonDateStr("Thu Apr 10 11:40:56 CST 2014", 8));
 		System.out.println(TimeUtils.transToSolrDateStr(getMidnight(System.currentTimeMillis(), -31)));
 		System.out.println(TimeUtils.transToSolrDateStr(transCurrentTime(System.currentTimeMillis(), 0, 0, -31, 0)));
 		System.out.println(convertMilliToStr(1 * 3600 * 1000 + 30 * 60 * 1000 + 10000));
+		System.out.println(timeStrByHour(System.currentTimeMillis()));
 	}
 
 	/**
@@ -47,6 +50,10 @@ public class TimeUtils {
 	 */
 	public static String transToSolrDateStr(long timestamp) {
 		return SOLR_FORMAT.format(new Date(timestamp));
+	}
+
+	public static long tranSolrDateStrToMilli(String str) throws ParseException {
+		return SOLR_FORMAT.parse(str).getTime();
 	}
 
 	/**
@@ -85,7 +92,7 @@ public class TimeUtils {
 	public static String transStrToCommonDateStr(String str, int hours) {
 		try {
 			return LONG_FORMAT.format(SOLR_RETURN_FORMAT.parse(str).getTime() - hours * 3600 * 1000);
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			return "";
 			//			throw new RuntimeException();
@@ -150,6 +157,15 @@ public class TimeUtils {
 		return date.getTimeInMillis();
 	}
 
+	public static long getZeroHourTime(long milli) {
+		Calendar date = Calendar.getInstance();
+		date.setTimeInMillis(milli);
+		date.set(Calendar.MINUTE, 0);
+		date.set(Calendar.SECOND, 0);
+		date.set(Calendar.MILLISECOND, 0);
+		return date.getTimeInMillis();
+	}
+
 	/**
 	 * 获得获得距离当前时间intervalDay的时间
 	 * @author donglei
@@ -193,5 +209,12 @@ public class TimeUtils {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
+	}
+
+	/**
+	 * 将当前的时间戳转换成小时精度，如："2014-09-05,14"
+	 */
+	public static String timeStrByHour(long milliSecond) {
+		return DATE_HOUR.format(new Date(milliSecond));
 	}
 }

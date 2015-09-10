@@ -30,33 +30,34 @@ public class CheckSumUtils {
 	private static final char HEX_DIGITS[] = //
 	{ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
-	private static MessageDigest MD5_MD;
-
-	static {
-		try {
-			MD5_MD = MessageDigest.getInstance("MD5");
-		} catch (NoSuchAlgorithmException e) {
-			logger.error("No such md5 algorithm!");
-		}
-	}
-
-	/***
+	/**
+	 * modified by donglei
+	 *
 	 * MD5加码 生成32位md5码
 	 */
 	public static String getMD5(String str) {
+		MessageDigest md5 = null;
+		try {
+			md5 = MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			logger.error("No such md5 algorithm!");
+			return null;
+		}
 		char[] charArray = str.toCharArray();
 		byte[] byteArray = new byte[charArray.length];
 
 		for (int i = 0; i < charArray.length; i++)
 			byteArray[i] = (byte) charArray[i];
 
-		byte[] md5Bytes = MD5_MD.digest(byteArray);
+		byte[] md5Bytes = md5.digest(byteArray);
+
 		StringBuffer hexValue = new StringBuffer();
 
 		for (int i = 0; i < md5Bytes.length; i++) {
 			int val = (md5Bytes[i]) & 0xff;
-			if (val < 16)
+			if (val < 16) {
 				hexValue.append("0");
+			}
 			hexValue.append(Integer.toHexString(val));
 		}
 
@@ -70,7 +71,14 @@ public class CheckSumUtils {
 	 * @return
 	 */
 	public static String getMD5Speed(String str) {
-		byte[] bs = MD5_MD.digest(str.getBytes(Charset.forName("UTF-8")));
+		MessageDigest md5 = null;
+		try {
+			md5 = MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			logger.error("No such md5 algorithm!");
+			return null;
+		}
+		byte[] bs = md5.digest(str.getBytes(Charset.forName("UTF-8")));
 		// 每个字节用 16 进制表示的话，使用两个字符，所以表示成 16 进制需要 32 个字符
 		char charArr[] = new char[16 * 2];
 		// 表示转换结果中对应的字符位置
@@ -86,6 +94,17 @@ public class CheckSumUtils {
 		}
 
 		return new String(charArr);
+	}
+
+	public static byte[] md5sum(String str) {
+		MessageDigest md5 = null;
+		try {
+			md5 = MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			logger.error("No such md5 algorithm!");
+			return null;
+		}
+		return md5.digest(str.getBytes());
 	}
 
 	/**

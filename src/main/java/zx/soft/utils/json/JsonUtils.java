@@ -93,6 +93,12 @@ public class JsonUtils {
 		}
 	}
 
+	/**
+	 * @author donglei
+	 * @param node
+	 * @param cls
+	 * @return
+	 */
 	public static <T> T getObject(JsonNode node, Class<T> t) {
 		ObjectReader objectReader = OBJECT_MAPPER.reader(t);
 		try {
@@ -103,9 +109,14 @@ public class JsonUtils {
 		}
 	}
 
+	/**
+	 * @author donglei
+	 * @param json
+	 * @param cls
+	 * @return
+	 */
 	public static <T> List<T> parseJsonArray(String json, Class<T> t) {
 		List<T> ts = new LinkedList<>();
-
 		JsonFactory factory = new JsonFactory();
 		JsonParser jp = null;
 		try {

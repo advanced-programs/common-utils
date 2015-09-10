@@ -10,8 +10,6 @@ import java.sql.SQLException;
 import org.junit.Before;
 import org.junit.Test;
 
-import zx.soft.utils.retry.RetryHandler;
-
 public class RetryHandlerTest {
 
 	class Bar implements Foo {
@@ -40,11 +38,13 @@ public class RetryHandlerTest {
 	}
 
 	interface Foo {
+
 		int fun();
 
 		int funError();
 
 		int funError2Times();
+
 	}
 
 	private Foo foo;
@@ -62,7 +62,6 @@ public class RetryHandlerTest {
 
 	@Test
 	public void test() {
-
 		assertEquals(1, foo.fun());
 	}
 

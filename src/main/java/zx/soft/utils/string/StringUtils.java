@@ -8,12 +8,14 @@ import java.nio.charset.Charset;
  *
  * @author hwdlei
  * @version 1.0.0
+ * @since 1.0.0
  */
 public class StringUtils {
 
 	/**
 	 * 判断字符是否为空，为空则返回true
 	 * 为空的条件：null、""
+	 *
 	 * @param str
 	 * @return
 	 */
@@ -21,11 +23,13 @@ public class StringUtils {
 		if (str == null || str.isEmpty()) {
 			return true;
 		}
+
 		return false;
 	}
 
 	/**
 	 * 将字符串转化为指定编码格式
+	 *
 	 * @param str
 	 * @param charsetName
 	 * @return
@@ -40,11 +44,13 @@ public class StringUtils {
 				e.printStackTrace();
 			}
 		}
+
 		return null;
 	}
 
 	/**
 	 * 将字符串转化为UTF-8格式
+	 *
 	 * @param str
 	 * @return
 	 */
@@ -54,6 +60,7 @@ public class StringUtils {
 
 	/**
 	 * 将字符串转化为UTF-16格式
+	 *
 	 * @param str
 	 * @return
 	 */
@@ -63,6 +70,7 @@ public class StringUtils {
 
 	/**
 	 * 将字符串转化为GBK格式
+	 *
 	 * @param str
 	 * @return
 	 */

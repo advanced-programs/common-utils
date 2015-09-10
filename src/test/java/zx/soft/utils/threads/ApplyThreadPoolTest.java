@@ -41,7 +41,6 @@ public class ApplyThreadPoolTest {
 		}
 		pool.shutdown();
 		pool.awaitTermination(5, TimeUnit.SECONDS);
-		System.out.println("ok");
 	}
 
 	@Test
@@ -54,6 +53,7 @@ public class ApplyThreadPoolTest {
 				result.setUncaughtExceptionHandler(new MyUnchecckedExceptionhandler());
 				return result;
 			}
+
 		};
 		ExecutorService pool = new ThreadPoolExecutor(2, 2, 0L, TimeUnit.MILLISECONDS,
 				new ArrayBlockingQueue<Runnable>(5), factory, new ThreadPoolExecutor.CallerRunsPolicy());

@@ -24,16 +24,17 @@ public class AwesomeThreadPool {
 	private static Logger logger = LoggerFactory.getLogger(AwesomeThreadPool.class);
 
 	/**
-	 * 执行多线程结果汇总
+	 * 启动线程池，并得到运行结果
 	 *
-	 * @param threadNum 线程数
-	 * @param calls
-	 * @param cls
+	 * @param num 线程池的大小
+	 * @param calls 要运行的任务
+	 * @param cls 返回结果类型
 	 * @return
 	 */
-	public static <T> List<T> runCallables(int threadNum, List<Callable<T>> calls, Class<T> cls) {
-		List<T> results = new ArrayList<>();
-		ExecutorService executor = Executors.newFixedThreadPool(threadNum);
+	public static <T> List<T> runCallables(int num, List<Callable<T>> calls) {
+		long start = System.currentTimeMillis();
+		List<T> results = new ArrayList<T>();
+		ExecutorService executor = Executors.newFixedThreadPool(num);
 		try {
 			List<Future<T>> list = new ArrayList<>();
 			for (Callable<T> call : calls) {
@@ -50,6 +51,8 @@ public class AwesomeThreadPool {
 		} finally {
 			executor.shutdown();
 		}
+		logger.info("The time coss of pool is: {} ms", System.currentTimeMillis() - start);
+
 		return results;
 	}
 

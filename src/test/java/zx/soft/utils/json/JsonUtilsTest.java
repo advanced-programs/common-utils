@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -37,6 +38,13 @@ public class JsonUtilsTest {
 		DateFormat dateFormat = JsonUtils.getDateFormat("yyyy-MM-dd");
 		Date date = dateFormat.parse("2013-10-23");
 		assertEquals("2013-10-23", dateFormat.format(date));
+	}
+
+	@SuppressWarnings("unchecked")
+	public void testGetObject() {
+		String json = "{\"期货\":12,\"中国梦\":14,\"项目\":13,\"员工\":11,\"价值\":25,\"源地\":74,\"发展\":20,\"瑞达\":10,\"精神\":20,\"企业\":23,\"社会\":12,\"市场\":10,\"男子\":10,\"中国\":27,\"实现\":11,\"工作\":11,\"地产\":10,\"创新\":22,\"实干\":15,\"北京\":13}";
+		Map<String, Integer> maps = JsonUtils.getObject(json, Map.class);
+		assertEquals(json, maps);
 	}
 
 }
