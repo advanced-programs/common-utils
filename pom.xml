@@ -14,15 +14,6 @@
 	<description>Common Utils for Development.</description>
 
 	<dependencies>
-		<!-- Restlet组件 -->
-		<dependency>
-			<groupId>org.restlet.jse</groupId>
-			<artifactId>org.restlet</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.restlet.jse</groupId>
-			<artifactId>org.restlet.ext.jackson</artifactId>
-		</dependency>
 		<!-- 系统信息Gather和Report包 -->
 		<dependency>
 			<groupId>fr.inria.powerapi.sensor</groupId>
