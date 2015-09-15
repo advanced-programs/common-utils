@@ -18,7 +18,15 @@ public class ConfigUtil {
 
 	private static Logger logger = LoggerFactory.getLogger(ConfigUtil.class);
 
-	public static final Properties UTILS_PROPS = getProps("utils.properties");
+	public static Properties UTILS_PROPS;
+
+	static {
+		try {
+			UTILS_PROPS = getProps("utils.properties");
+		} catch (Exception e) {
+			UTILS_PROPS = getProps("utils-sample.properties");
+		}
+	}
 
 	public static Properties getProps(String confFileName) {
 		Properties result = new Properties();
@@ -26,7 +34,7 @@ public class ConfigUtil {
 		try (InputStream in = ConfigUtil.class.getClassLoader().getResourceAsStream(confFileName);) {
 			result.load(in);
 			return result;
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
