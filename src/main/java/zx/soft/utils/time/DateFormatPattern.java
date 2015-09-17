@@ -18,7 +18,9 @@ public enum DateFormatPattern {
 
 	LONG_FORMAT("yyyy-MM-dd HH:mm:ss"), //
 
-	TWITTER_FORMAT("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+	TWITTER_FORMAT("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"), //
+
+	DATE_HOUR("yyyy-MM-dd,HH");
 
 	// 成员变量
 	private final String pattern;
