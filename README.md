@@ -33,9 +33,19 @@
 </project>
 ```
 
+### 生成Java Doc
+
+```
+    mvn -Pjavadoc javadoc:javadoc
+```
+
 ### 注意事项
 
 > ProgramDriver目前针对RESTlet启动的接口服务不支持，会导致接口启动不成功。
+
+### 参考项目
+
+1. [concurrentunit并发测试框架](https://github.com/jhalterman/concurrentunit "并发单元测试")
 
 ### 开发人员
 
