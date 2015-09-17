@@ -3,3 +3,4 @@
 .settings/
 target/
 logs/
+test-output/
