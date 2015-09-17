@@ -97,6 +97,17 @@
 			<version>0.4.1</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.5.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<optional>true</optional>
+		</dependency>
 		<!-- 单元测试包 -->
 		<dependency>
 			<groupId>junit</groupId>

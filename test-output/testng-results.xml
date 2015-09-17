@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="2" total="2" passed="0">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="23" started-at="2015-09-17T14:49:28Z" finished-at="2015-09-17T14:49:28Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="23" started-at="2015-09-17T14:49:28Z" finished-at="2015-09-17T14:49:28Z">
+      <class name="zx.soft.utils.concurrent.Issue5">
+        <test-method status="FAIL" signature="testOne()[pri:0, instance:zx.soft.utils.concurrent.Issue5@483bf400]" name="testOne" duration-ms="10" started-at="2015-09-17T14:49:28Z" finished-at="2015-09-17T14:49:28Z">
+          <exception class="org.testng.TestException">
+            <message>
+              <![CDATA[
+Expected exception java.lang.AssertionError but got org.testng.TestException: 
+Method Issue5.testOne()[pri:0, instance:zx.soft.utils.concurrent.Issue5@483bf400] should have thrown an exception of class java.lang.AssertionError]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.testng.TestException: 
+Expected exception java.lang.AssertionError but got org.testng.TestException: 
+Method Issue5.testOne()[pri:0, instance:zx.soft.utils.concurrent.Issue5@483bf400] should have thrown an exception of class java.lang.AssertionError
+	at org.testng.internal.Invoker.handleInvocationResults(Invoker.java:1485)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1233)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:768)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:87)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1188)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1113)
+	at org.testng.TestNG.run(TestNG.java:1025)
+	at org.testng.remote.RemoteTestNG.run(RemoteTestNG.java:109)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:202)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:173)
+Caused by: org.testng.TestException: 
+Method Issue5.testOne()[pri:0, instance:zx.soft.utils.concurrent.Issue5@483bf400] should have thrown an exception of class java.lang.AssertionError
+	at org.testng.internal.Invoker.handleInvocationResults(Invoker.java:1500)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:751)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:894)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1219)
+	... 16 more
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.testng.TestException -->
+        </test-method> <!-- testOne -->
+        <test-method status="FAIL" signature="testTwo()[pri:0, instance:zx.soft.utils.concurrent.Issue5@483bf400]" name="testTwo" duration-ms="1" started-at="2015-09-17T14:49:28Z" finished-at="2015-09-17T14:49:28Z">
+          <exception class="org.testng.TestException">
+            <message>
+              <![CDATA[
+Expected exception java.lang.AssertionError but got org.testng.TestException: 
+Method Issue5.testTwo()[pri:0, instance:zx.soft.utils.concurrent.Issue5@483bf400] should have thrown an exception of class java.lang.AssertionError]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.testng.TestException: 
+Expected exception java.lang.AssertionError but got org.testng.TestException: 
+Method Issue5.testTwo()[pri:0, instance:zx.soft.utils.concurrent.Issue5@483bf400] should have thrown an exception of class java.lang.AssertionError
+	at org.testng.internal.Invoker.handleInvocationResults(Invoker.java:1485)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1233)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:768)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:87)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1188)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1113)
+	at org.testng.TestNG.run(TestNG.java:1025)
+	at org.testng.remote.RemoteTestNG.run(RemoteTestNG.java:109)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:202)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:173)
+Caused by: org.testng.TestException: 
+Method Issue5.testTwo()[pri:0, instance:zx.soft.utils.concurrent.Issue5@483bf400] should have thrown an exception of class java.lang.AssertionError
+	at org.testng.internal.Invoker.handleInvocationResults(Invoker.java:1500)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:751)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:894)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1219)
+	... 16 more
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.testng.TestException -->
+        </test-method> <!-- testTwo -->
+      </class> <!-- zx.soft.utils.concurrent.Issue5 -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
