@@ -50,7 +50,7 @@ public class TimeUtilsTest {
 					System.err.println(COUNT.addAndGet(1));
 					//					System.err.println(TimeUtils.tranSinaApiDate(ORI));
 					// junit存在并发测试问题，最终并未执行1000次，如果注释掉下面，运行上面语句则可以执行1000次。
-					assertEquals(DES, TimeUtils.tranSinaApiDate(ORI));
+					assertEquals(DES, TimeUtils.tranSinaApiDate(ORI).toString());
 				}
 
 			});
