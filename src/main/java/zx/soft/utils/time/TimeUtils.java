@@ -64,6 +64,16 @@ public class TimeUtils {
 		}
 	}
 
+	public static long transSolrReturnStrToMilli(String str) {
+		try {
+			return DateFormatterThreadLocal.getSolrReturnDateFormat().parse(str).getTime();
+		} catch (ParseException e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			return 0L;
+			//			throw new RuntimeException();
+		}
+	}
+
 	/**
 	 * 将Solr返回的时间串转换成可读性较好的格式，并提前N小时，Solr提前8小时
 	 */
