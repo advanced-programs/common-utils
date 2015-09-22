@@ -2,12 +2,16 @@ package zx.soft.utils.threads;
 
 import java.util.HashSet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * 通用对象工厂，可限制产生的对象，并提供对象池
  * @author donglei
  * @param <T>
  */
 public abstract class ObjectFactory<T> {
+	private static Logger logger = LoggerFactory.getLogger(ObjectFactory.class);
 
 	private final int NUM;
 	private final int TRY;
@@ -33,19 +37,25 @@ public abstract class ObjectFactory<T> {
 
 	public synchronized T checkOut() throws InterruptedException {
 		boolean isGet = false;
-		while (!isGet) {
+		int numTry = 0;
+		while (!isGet && numTry <= TRY) {
 			if (available.size() > 0) {
 				isGet = true;
+				logger.info("Get an instance from the pool");
 				continue;
 			}
 			if (inUse.size() < NUM) {
 				available.add(create());
+				logger.info("Create a new instance !");
 				isGet = true;
 			} else {
-				wait(TRY * 1000);
+				logger.info("All instances have bean used, wait 1 second!");
+				wait(1000);
+				numTry++;
 			}
 		}
 		if (!isGet) {
+			logger.info("No instance available after waiting {} seconds!", TRY);
 			return null;
 		}
 		T instance = available.iterator().next();

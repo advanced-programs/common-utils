@@ -7,8 +7,8 @@ public class StringPool extends ObjectFactory<String> {
 		super();
 	}
 
-	public StringPool(int num) {
-		super(num, 5);
+	public StringPool(int num, int tryNum) {
+		super(num, tryNum);
 	}
 
 	@Override
