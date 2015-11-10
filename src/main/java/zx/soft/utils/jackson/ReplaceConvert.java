@@ -5,14 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
 import org.restlet.engine.Engine;
 import org.restlet.engine.converter.ConverterHelper;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * 替代转换工具
- * 
+ *
  * @author wanggang
  *
  */
@@ -23,7 +23,7 @@ public class ReplaceConvert {
 	public static void configureJacksonConverter() {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setDateFormat(sinaDateFormat);
-		objectMapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, true);
+		//		objectMapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, true);
 	}
 
 	/**
