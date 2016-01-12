@@ -6,8 +6,6 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import zx.soft.utils.log.LogbackUtil;
-
 /**
  * 配置文件读取类
  *
@@ -35,8 +33,8 @@ public class ConfigUtil {
 			result.load(in);
 			return result;
 		} catch (final Exception e) {
-			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
-			throw new RuntimeException(e);
+			logger.error("Config file '{}' does not exist!", confFileName);
+			throw new RuntimeException();
 		}
 	}
 
